@@ -70,6 +70,7 @@ function Logo() {
 function Nav() {
   const links = [
     { href: "#platform", label: "Platform" },
+    { href: "#demo", label: "Live Demo" },
     { href: "#dashboard", label: "Dashboard" },
     { href: "#impact", label: "Impact" },
     { href: "#contact", label: "Contact" },
