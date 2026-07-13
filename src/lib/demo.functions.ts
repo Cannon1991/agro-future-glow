@@ -39,13 +39,13 @@ export const analyzeLocation = createServerFn({ method: "POST" })
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
     const gateway = createLovableAiGatewayProvider(key);
 
-    const { experimental_output } = await generateText({
+    const { output } = await generateText({
       model: gateway("google/gemini-2.5-flash"),
-      experimental_output: Output.object({ schema: Schema }),
+      output: Output.object({ schema: Schema }),
       system:
         "You are an agronomist for AgroPulse Fix, a digital agriculture platform for Nigeria and West Africa. Return realistic, region-appropriate crop suitability data. Prefer staple and cash crops actually grown in the requested area. Values must be plausible for smallholder farming.",
       prompt: `Location: "${data.location}". Produce a parcel-detection & crop suitability briefing.`,
     });
 
-    return experimental_output;
+    return output;
   });
