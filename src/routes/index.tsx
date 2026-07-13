@@ -24,6 +24,7 @@ import weatherImg from "@/assets/weather.jpg";
 import analyticsImg from "@/assets/analytics.jpg";
 import diseaseImg from "@/assets/disease.jpg";
 import communityImg from "@/assets/community.jpg";
+import { InteractiveDemo } from "@/components/InteractiveDemo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
