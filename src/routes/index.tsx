@@ -511,6 +511,7 @@ function Index() {
         <Hero />
         <TrustBar />
         <Platform />
+        <InteractiveDemo />
         <Dashboard />
         <HowItWorks />
         <Impact />
