@@ -77,14 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "AgroPulse Fix — AI Digital Agriculture for Nigeria & Beyond" },
+      { name: "description", content: "AgroPulse Fix uses satellite data, weather models and AI to map parcels, detect crop disease early, optimize fertilizer use and boost yields for farmers and governments." },
+      { name: "author", content: "AgroPulse Fix" },
+      { name: "keywords", content: "digital agriculture, Nigeria, satellite farming, AI agriculture, crop disease detection, fertilizer optimization, food security, precision agriculture, AgroPulse Fix" },
+      { property: "og:title", content: "AgroPulse Fix — AI Digital Agriculture" },
+      { property: "og:description", content: "Satellite + weather + AI to boost yields, cut waste and secure food production in Nigeria and worldwide." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "AgroPulse Fix" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "AgroPulse Fix — AI Digital Agriculture" },
+      { name: "twitter:description", content: "Satellite + weather + AI for smarter farming and stronger food security." },
     ],
     links: [
       {
