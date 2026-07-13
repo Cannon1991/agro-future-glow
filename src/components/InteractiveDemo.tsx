@@ -1,0 +1,278 @@
+import { useState, useMemo } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle } from "lucide-react";
+import { analyzeLocation, type DemoAnalysis } from "@/lib/demo.functions";
+
+// Deterministic hash → seeded PRNG so the same location always renders the same map
+function hashString(s: string) {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = seed;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+type Parcel = { x: number; y: number; w: number; h: number; hue: number; rot: number };
+
+function generateParcels(seed: number, count: number): Parcel[] {
+  const rand = mulberry32(seed);
+  const parcels: Parcel[] = [];
+  const target = Math.min(80, Math.max(24, Math.round(count / 6)));
+  let guard = 0;
+  while (parcels.length < target && guard++ < 800) {
+    const w = 6 + rand() * 14;
+    const h = 5 + rand() * 12;
+    const x = 4 + rand() * (96 - w);
+    const y = 4 + rand() * (96 - h);
+    const overlap = parcels.some(
+      (p) => x < p.x + p.w + 0.6 && x + w + 0.6 > p.x && y < p.y + p.h + 0.6 && y + h + 0.6 > p.y
+    );
+    if (overlap) continue;
+    parcels.push({
+      x,
+      y,
+      w,
+      h,
+      hue: 90 + rand() * 60, // greens/olives
+      rot: (rand() - 0.5) * 10,
+    });
+  }
+  return parcels;
+}
+
+function ParcelMap({ seed, detected }: { seed: number; detected: number }) {
+  const parcels = useMemo(() => generateParcels(seed, detected), [seed, detected]);
+  return (
+    <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-[oklch(0.28_0.05_140)] shadow-[var(--shadow-elevated)]">
+      {/* base terrain gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,oklch(0.42_0.08_130),oklch(0.24_0.05_150))]" />
+      {/* grid overlay */}
+      <svg className="absolute inset-0 h-full w-full opacity-30" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="8%" height="8%" patternUnits="userSpaceOnUse">
+            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="white" strokeWidth="0.3" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+      {/* parcels */}
+      <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+        {parcels.map((p, i) => (
+          <rect
+            key={i}
+            x={p.x}
+            y={p.y}
+            width={p.w}
+            height={p.h}
+            transform={`rotate(${p.rot} ${p.x + p.w / 2} ${p.y + p.h / 2})`}
+            fill={`oklch(0.65 0.14 ${p.hue})`}
+            fillOpacity="0.85"
+            stroke="oklch(0.95 0.02 130)"
+            strokeWidth="0.25"
+          />
+        ))}
+      </svg>
+      {/* scan line */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 animate-[scan_3.5s_ease-in-out_infinite] bg-gradient-to-b from-emerald-300/25 to-transparent" />
+      <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-medium text-white backdrop-blur">
+        <Satellite className="h-3 w-3" /> Sentinel-2 · NDVI composite
+      </div>
+      <div className="absolute bottom-3 right-3 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-medium text-white backdrop-blur">
+        {parcels.length} parcels rendered
+      </div>
+      <style>{`@keyframes scan { 0%,100% { transform: translateY(-30%); } 50% { transform: translateY(320%); } }`}</style>
+    </div>
+  );
+}
+
+function ResultPanel({ data }: { data: DemoAnalysis }) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+          <MapPin className="h-3.5 w-3.5" /> {data.region}
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="rounded-xl border border-border bg-card p-4">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">Parcels detected</p>
+            <p className="mt-1 text-2xl font-bold text-foreground">{data.parcels.detected.toLocaleString()}</p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-4">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">Avg. size</p>
+            <p className="mt-1 text-2xl font-bold text-foreground">{data.parcels.avgHectares.toFixed(1)} ha</p>
+          </div>
+        </div>
+        <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
+          <p><span className="font-medium text-foreground">Climate:</span> {data.climate}</p>
+          <p><span className="font-medium text-foreground">Soil:</span> {data.soil}</p>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Crop suitability</h4>
+        <ul className="mt-3 space-y-3">
+          {data.crops.map((c) => (
+            <li key={c.name} className="rounded-xl border border-border bg-card p-4">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-semibold text-foreground">{c.name}</span>
+                <span className="text-sm font-bold text-primary">{c.suitability}%</span>
+              </div>
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                <div
+                  className="h-full rounded-full bg-[image:var(--gradient-primary)]"
+                  style={{ width: `${c.suitability}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">{c.window}</span> · {c.note}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Risks to watch</h4>
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {data.risks.map((r) => (
+            <li
+              key={r}
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:text-amber-300"
+            >
+              <AlertTriangle className="h-3 w-3" /> {r}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+        <div className="flex items-center gap-2 text-primary">
+          <Sparkles className="h-4 w-4" />
+          <span className="text-xs font-bold uppercase tracking-widest">AI advisory</span>
+        </div>
+        <p className="mt-2 text-sm leading-relaxed text-foreground">{data.advisory}</p>
+      </div>
+    </div>
+  );
+}
+
+export function InteractiveDemo() {
+  const [location, setLocation] = useState("");
+  const [submitted, setSubmitted] = useState<string | null>(null);
+  const analyze = useServerFn(analyzeLocation);
+
+  const mutation = useMutation({
+    mutationFn: (loc: string) => analyze({ data: { location: loc } }),
+    onSuccess: (_d, loc) => setSubmitted(loc),
+  });
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = location.trim();
+    if (trimmed.length < 2) return;
+    mutation.mutate(trimmed);
+  };
+
+  const seed = useMemo(() => hashString(submitted ?? "seed"), [submitted]);
+
+  return (
+    <section id="demo" className="bg-background py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="text-sm font-semibold uppercase tracking-widest text-primary">Live demo</span>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+            See your village from orbit.
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Enter any Nigerian village, local government or state. Our AI simulates a
+            satellite parcel map and generates a crop-suitability briefing in seconds.
+          </p>
+        </div>
+
+        <form
+          onSubmit={onSubmit}
+          className="mx-auto mt-10 flex max-w-2xl flex-col gap-3 sm:flex-row"
+        >
+          <div className="relative flex-1">
+            <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              maxLength={120}
+              placeholder="e.g. Ado LGA, Ekiti State"
+              className="h-14 w-full rounded-full border border-border bg-card pl-12 pr-5 text-base text-foreground shadow-[var(--shadow-soft)] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+              aria-label="Village or local government"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={mutation.isPending || location.trim().length < 2}
+            className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-7 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {mutation.isPending ? (
+              <><Loader2 className="h-5 w-5 animate-spin" /> Analyzing…</>
+            ) : (
+              <>Analyze <ArrowRight className="h-5 w-5" /></>
+            )}
+          </button>
+        </form>
+
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Try: <button type="button" onClick={() => setLocation("Ado LGA, Ekiti State")} className="underline underline-offset-2 hover:text-primary">Ado LGA, Ekiti State</button>
+          {" · "}
+          <button type="button" onClick={() => setLocation("Kano State")} className="underline underline-offset-2 hover:text-primary">Kano State</button>
+          {" · "}
+          <button type="button" onClick={() => setLocation("Ogbomosho, Oyo")} className="underline underline-offset-2 hover:text-primary">Ogbomosho, Oyo</button>
+        </p>
+
+        <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:items-start">
+          <div className="lg:sticky lg:top-24">
+            {submitted && mutation.data ? (
+              <ParcelMap seed={seed} detected={mutation.data.parcels.detected} />
+            ) : (
+              <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-dashed border-border bg-secondary/30">
+                <div className="text-center">
+                  <Satellite className="mx-auto h-10 w-10 text-muted-foreground/60" />
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {mutation.isPending ? "Contacting satellites…" : "Your parcel map will appear here."}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div>
+            {mutation.isError && (
+              <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-5 text-sm text-destructive">
+                Could not analyze that location. Please try again in a moment.
+              </div>
+            )}
+            {mutation.data ? (
+              <ResultPanel data={mutation.data} />
+            ) : !mutation.isError && (
+              <div className="rounded-2xl border border-border bg-card p-8 text-center text-muted-foreground shadow-[var(--shadow-soft)]">
+                <Sparkles className="mx-auto h-8 w-8 text-primary/60" />
+                <p className="mt-3 text-sm">
+                  Enter a location above to generate a live AI briefing — parcel
+                  count, best crops, planting windows and risks.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
