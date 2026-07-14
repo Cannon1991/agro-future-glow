@@ -380,16 +380,29 @@ export function InteractiveDemo() {
           <button type="button" onClick={() => setLocation("Ogbomosho, Oyo")} className="underline underline-offset-2 hover:text-primary">Ogbomosho, Oyo</button>
         </p>
 
+        {mutation.isPending && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="mx-auto mt-6 flex max-w-2xl items-center justify-center gap-2 text-sm text-muted-foreground"
+          >
+            <Loader2 className="h-4 w-4 animate-spin text-primary" />
+            Analyzing “{location.trim()}” — this usually takes 5–10 seconds.
+          </div>
+        )}
+
         <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:items-start">
           <div className="lg:sticky lg:top-24">
-            {submitted && mutation.data ? (
+            {mutation.isPending ? (
+              <MapSkeleton />
+            ) : submitted && mutation.data ? (
               <ParcelMap seed={seed} detected={mutation.data.parcels.detected} />
             ) : (
               <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-dashed border-border bg-secondary/30">
                 <div className="text-center">
                   <Satellite className="mx-auto h-10 w-10 text-muted-foreground/60" />
                   <p className="mt-3 text-sm text-muted-foreground">
-                    {mutation.isPending ? "Contacting satellites…" : "Your parcel map will appear here."}
+                    Your parcel map will appear here.
                   </p>
                 </div>
               </div>
@@ -402,7 +415,29 @@ export function InteractiveDemo() {
                 Could not analyze that location. Please try again in a moment.
               </div>
             )}
-            {mutation.data ? (
+            {mutation.isPending ? (
+              <div className="space-y-6">
+                <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
+                  <div className="flex items-center gap-2 text-primary">
+                    <Sparkles className="h-4 w-4 animate-pulse" />
+                    <span className="text-xs font-bold uppercase tracking-widest">
+                      Generating briefing
+                    </span>
+                  </div>
+                  <div className="mt-4">
+                    <ProgressChecklist active={mutation.isPending} />
+                  </div>
+                  <div className="relative mt-5 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                    <div
+                      className="absolute inset-y-0 left-0 w-1/3 rounded-full bg-[image:var(--gradient-primary)]"
+                      style={{ animation: "demoBar 1.6s ease-in-out infinite" }}
+                    />
+                  </div>
+                  <style>{`@keyframes demoBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(320%); } }`}</style>
+                </div>
+                <ResultSkeleton />
+              </div>
+            ) : mutation.data ? (
               <ResultPanel data={mutation.data} />
             ) : !mutation.isError && (
               <div className="rounded-2xl border border-border bg-card p-8 text-center text-muted-foreground shadow-[var(--shadow-soft)]">
