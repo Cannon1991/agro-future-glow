@@ -1,8 +1,151 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle } from "lucide-react";
+import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle } from "lucide-react";
 import { analyzeLocation, type DemoAnalysis } from "@/lib/demo.functions";
+
+const DEMO_STEPS = [
+  { key: "geo", label: "Locating region & pulling boundaries" },
+  { key: "sat", label: "Fetching Sentinel-2 imagery" },
+  { key: "ndvi", label: "Computing NDVI & segmenting parcels" },
+  { key: "climate", label: "Cross-referencing climate & soil data" },
+  { key: "ai", label: "Generating AI crop advisory" },
+];
+
+function ProgressChecklist({ active }: { active: boolean }) {
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (!active) {
+      setStep(0);
+      return;
+    }
+    setStep(0);
+    const id = setInterval(() => {
+      setStep((s) => (s < DEMO_STEPS.length - 1 ? s + 1 : s));
+    }, 1400);
+    return () => clearInterval(id);
+  }, [active]);
+
+  return (
+    <ul className="space-y-2.5">
+      {DEMO_STEPS.map((s, i) => {
+        const done = i < step;
+        const current = i === step;
+        return (
+          <li key={s.key} className="flex items-center gap-3 text-sm">
+            {done ? (
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+            ) : current ? (
+              <Loader2 className="h-4 w-4 shrink-0 animate-spin text-primary" />
+            ) : (
+              <Circle className="h-4 w-4 shrink-0 text-muted-foreground/40" />
+            )}
+            <span
+              className={
+                done
+                  ? "text-foreground"
+                  : current
+                  ? "font-medium text-foreground"
+                  : "text-muted-foreground"
+              }
+            >
+              {s.label}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function MapSkeleton() {
+  return (
+    <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-secondary/40 shadow-[var(--shadow-soft)]">
+      <div className="absolute inset-0 animate-pulse bg-[radial-gradient(circle_at_30%_30%,oklch(0.9_0.03_130),oklch(0.82_0.04_150))]" />
+      <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+        {Array.from({ length: 18 }).map((_, i) => {
+          const x = (i * 37) % 80 + 5;
+          const y = (i * 53) % 78 + 6;
+          const w = 8 + ((i * 7) % 10);
+          const h = 6 + ((i * 5) % 9);
+          return (
+            <rect
+              key={i}
+              x={x}
+              y={y}
+              width={w}
+              height={h}
+              rx="0.6"
+              fill="oklch(0.75 0.04 140)"
+              fillOpacity="0.55"
+              className="animate-pulse"
+              style={{ animationDelay: `${(i % 6) * 120}ms` }}
+            />
+          );
+        })}
+      </svg>
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-emerald-300/40 to-transparent"
+        style={{ animation: "scan 2s ease-in-out infinite" }}
+      />
+      <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-medium text-white backdrop-blur">
+        <Loader2 className="h-3 w-3 animate-spin" /> Scanning imagery…
+      </div>
+      <style>{`@keyframes scan { 0%,100% { transform: translateY(-30%); } 50% { transform: translateY(320%); } }`}</style>
+    </div>
+  );
+}
+
+function ResultSkeleton() {
+  return (
+    <div className="space-y-6" aria-hidden="true">
+      <div>
+        <div className="h-6 w-40 animate-pulse rounded-full bg-secondary" />
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          {[0, 1].map((i) => (
+            <div key={i} className="rounded-xl border border-border bg-card p-4">
+              <div className="h-3 w-24 animate-pulse rounded bg-secondary" />
+              <div className="mt-3 h-6 w-20 animate-pulse rounded bg-secondary" />
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 space-y-2">
+          <div className="h-3 w-3/4 animate-pulse rounded bg-secondary" />
+          <div className="h-3 w-2/3 animate-pulse rounded bg-secondary" />
+        </div>
+      </div>
+      <div>
+        <div className="h-4 w-40 animate-pulse rounded bg-secondary" />
+        <ul className="mt-3 space-y-3">
+          {[0, 1, 2].map((i) => (
+            <li key={i} className="rounded-xl border border-border bg-card p-4">
+              <div className="flex items-center justify-between">
+                <div className="h-4 w-28 animate-pulse rounded bg-secondary" />
+                <div className="h-4 w-10 animate-pulse rounded bg-secondary" />
+              </div>
+              <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                <div
+                  className="h-full rounded-full bg-[image:var(--gradient-primary)] opacity-60"
+                  style={{ width: `${40 + i * 20}%`, animation: "pulse 1.6s ease-in-out infinite" }}
+                />
+              </div>
+              <div className="mt-3 h-3 w-2/3 animate-pulse rounded bg-secondary" />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
+        <div className="h-3 w-24 animate-pulse rounded bg-primary/20" />
+        <div className="mt-3 space-y-2">
+          <div className="h-3 w-full animate-pulse rounded bg-primary/15" />
+          <div className="h-3 w-5/6 animate-pulse rounded bg-primary/15" />
+          <div className="h-3 w-2/3 animate-pulse rounded bg-primary/15" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 // Deterministic hash → seeded PRNG so the same location always renders the same map
 function hashString(s: string) {
