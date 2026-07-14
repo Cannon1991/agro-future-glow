@@ -385,12 +385,6 @@ export function InteractiveDemo() {
 
         <form
           onSubmit={onSubmit}
-          className="mx-auto mt-10 flex max-w-2xl flex-col gap-3 sm:flex-row"
-        >
-          <div className="relative flex-1">
-            <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-        <form
-          onSubmit={onSubmit}
           noValidate
           className="mx-auto mt-10 max-w-2xl"
         >
