@@ -1,8 +1,39 @@
 import { useState, useMemo, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle } from "lucide-react";
+import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle, Info } from "lucide-react";
+import { z } from "zod";
 import { analyzeLocation, type DemoAnalysis } from "@/lib/demo.functions";
+
+// Client-side validation for the location query.
+// Accepts formats like:
+//   "Ado LGA, Ekiti State"
+//   "Ado, Ekiti, Nigeria"
+//   "Kano State"
+//   "Ogbomosho, Oyo"
+const LOCATION_REGEX = /^[\p{L}\p{M}0-9][\p{L}\p{M}0-9\s.,'\-/()]{1,118}[\p{L}\p{M}0-9.)]$/u;
+
+const LocationSchema = z
+  .string()
+  .trim()
+  .min(2, { message: "Enter at least 2 characters." })
+  .max(120, { message: "Keep it under 120 characters." })
+  .regex(LOCATION_REGEX, {
+    message: "Use letters, numbers, spaces, commas or hyphens only.",
+  })
+  .refine((v) => /[\p{L}]/u.test(v), {
+    message: "Include the place name (letters), not just numbers.",
+  })
+  .refine((v) => !/(.)\1{4,}/.test(v), {
+    message: "That doesn't look like a real place name.",
+  });
+
+function validateLocation(raw: string): { ok: true; value: string } | { ok: false; error: string } {
+  const result = LocationSchema.safeParse(raw);
+  if (result.success) return { ok: true, value: result.data };
+  return { ok: false, error: result.error.issues[0]?.message ?? "Invalid location." };
+}
+
 
 const DEMO_STEPS = [
   { key: "geo", label: "Locating region & pulling boundaries" },
