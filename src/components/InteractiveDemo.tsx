@@ -395,6 +395,18 @@ export function InteractiveDemo() {
           <div className="lg:sticky lg:top-24">
             {mutation.isPending ? (
               <MapSkeleton />
+            ) : mutation.isError ? (
+              <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-dashed border-destructive/40 bg-destructive/5 p-6">
+                <div className="text-center">
+                  <AlertTriangle className="mx-auto h-10 w-10 text-destructive/70" />
+                  <p className="mt-3 text-sm font-medium text-destructive">
+                    Map generation failed
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    We couldn't render the parcel map for this location.
+                  </p>
+                </div>
+              </div>
             ) : submitted && mutation.data ? (
               <ParcelMap seed={seed} detected={mutation.data.parcels.detected} />
             ) : (
@@ -411,8 +423,52 @@ export function InteractiveDemo() {
 
           <div>
             {mutation.isError && (
-              <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-5 text-sm text-destructive">
-                Could not analyze that location. Please try again in a moment.
+              <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+                    <AlertTriangle className="h-5 w-5 text-destructive" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-semibold text-destructive">
+                      AI briefing unavailable
+                    </h4>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      We couldn't generate a briefing for
+                      {location.trim() ? ` “${location.trim()}”` : " this location"}.
+                      This can happen if the AI service is busy, the network dropped,
+                      or the location wasn't recognized. Please check your spelling and try again.
+                    </p>
+                    {mutation.error instanceof Error && mutation.error.message && (
+                      <p className="mt-2 rounded-md bg-destructive/10 px-3 py-2 font-mono text-xs text-destructive/90">
+                        {mutation.error.message}
+                      </p>
+                    )}
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const loc = (submitted ?? location).trim();
+                          if (loc.length >= 2) mutation.mutate(loc);
+                        }}
+                        disabled={mutation.isPending}
+                        className="inline-flex items-center gap-2 rounded-full bg-destructive px-4 py-2 text-xs font-semibold text-destructive-foreground shadow-sm transition hover:opacity-90 disabled:opacity-60"
+                      >
+                        <Loader2 className={`h-3.5 w-3.5 ${mutation.isPending ? "animate-spin" : "hidden"}`} />
+                        Retry analysis
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          mutation.reset();
+                          setSubmitted(null);
+                        }}
+                        className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground transition hover:bg-secondary"
+                      >
+                        Try a different location
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {mutation.isPending ? (
