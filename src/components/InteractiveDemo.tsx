@@ -352,12 +352,20 @@ export function InteractiveDemo() {
     onSuccess: (_d, loc) => setSubmitted(loc),
   });
 
+  const [touched, setTouched] = useState(false);
+  const validation = useMemo(() => validateLocation(location), [location]);
+  const showError = touched && !validation.ok && location.trim().length > 0;
+  const inputId = "demo-location";
+  const hintId = "demo-location-hint";
+  const errorId = "demo-location-error";
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = location.trim();
-    if (trimmed.length < 2) return;
-    mutation.mutate(trimmed);
+    setTouched(true);
+    if (!validation.ok) return;
+    mutation.mutate(validation.value);
   };
+
 
   const seed = useMemo(() => hashString(submitted ?? "seed"), [submitted]);
 
