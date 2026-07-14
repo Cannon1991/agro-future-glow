@@ -1,8 +1,39 @@
 import { useState, useMemo, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle } from "lucide-react";
+import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle, Info } from "lucide-react";
+import { z } from "zod";
 import { analyzeLocation, type DemoAnalysis } from "@/lib/demo.functions";
+
+// Client-side validation for the location query.
+// Accepts formats like:
+//   "Ado LGA, Ekiti State"
+//   "Ado, Ekiti, Nigeria"
+//   "Kano State"
+//   "Ogbomosho, Oyo"
+const LOCATION_REGEX = /^[\p{L}\p{M}0-9][\p{L}\p{M}0-9\s.,'\-/()]{1,118}[\p{L}\p{M}0-9.)]$/u;
+
+const LocationSchema = z
+  .string()
+  .trim()
+  .min(2, { message: "Enter at least 2 characters." })
+  .max(120, { message: "Keep it under 120 characters." })
+  .regex(LOCATION_REGEX, {
+    message: "Use letters, numbers, spaces, commas or hyphens only.",
+  })
+  .refine((v) => /[\p{L}]/u.test(v), {
+    message: "Include the place name (letters), not just numbers.",
+  })
+  .refine((v) => !/(.)\1{4,}/.test(v), {
+    message: "That doesn't look like a real place name.",
+  });
+
+function validateLocation(raw: string): { ok: true; value: string } | { ok: false; error: string } {
+  const result = LocationSchema.safeParse(raw);
+  if (result.success) return { ok: true, value: result.data };
+  return { ok: false, error: result.error.issues[0]?.message ?? "Invalid location." };
+}
+
 
 const DEMO_STEPS = [
   { key: "geo", label: "Locating region & pulling boundaries" },
@@ -321,12 +352,20 @@ export function InteractiveDemo() {
     onSuccess: (_d, loc) => setSubmitted(loc),
   });
 
+  const [touched, setTouched] = useState(false);
+  const validation = useMemo(() => validateLocation(location), [location]);
+  const showError = touched && !validation.ok && location.trim().length > 0;
+  const inputId = "demo-location";
+  const hintId = "demo-location-hint";
+  const errorId = "demo-location-error";
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = location.trim();
-    if (trimmed.length < 2) return;
-    mutation.mutate(trimmed);
+    setTouched(true);
+    if (!validation.ok) return;
+    mutation.mutate(validation.value);
   };
+
 
   const seed = useMemo(() => hashString(submitted ?? "seed"), [submitted]);
 
@@ -346,38 +385,73 @@ export function InteractiveDemo() {
 
         <form
           onSubmit={onSubmit}
-          className="mx-auto mt-10 flex max-w-2xl flex-col gap-3 sm:flex-row"
+          noValidate
+          className="mx-auto mt-10 max-w-2xl"
         >
-          <div className="relative flex-1">
-            <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              maxLength={120}
-              placeholder="e.g. Ado LGA, Ekiti State"
-              className="h-14 w-full rounded-full border border-border bg-card pl-12 pr-5 text-base text-foreground shadow-[var(--shadow-soft)] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
-              aria-label="Village or local government"
-            />
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="relative flex-1">
+              <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+              <input
+                id={inputId}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                onBlur={() => setTouched(true)}
+                maxLength={120}
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="e.g. Ado LGA, Ekiti State, Nigeria"
+                aria-label="Village, local government, state or country"
+                aria-invalid={showError || undefined}
+                aria-describedby={showError ? `${hintId} ${errorId}` : hintId}
+                className={`h-14 w-full rounded-full border bg-card pl-12 pr-5 text-base text-foreground shadow-[var(--shadow-soft)] outline-none transition focus:ring-2 ${
+                  showError
+                    ? "border-destructive focus:border-destructive focus:ring-destructive/30"
+                    : "border-border focus:border-primary focus:ring-primary/30"
+                }`}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={mutation.isPending || (touched && !validation.ok)}
+              className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-7 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {mutation.isPending ? (
+                <><Loader2 className="h-5 w-5 animate-spin" /> Analyzing…</>
+              ) : (
+                <>Analyze <ArrowRight className="h-5 w-5" /></>
+              )}
+            </button>
           </div>
-          <button
-            type="submit"
-            disabled={mutation.isPending || location.trim().length < 2}
-            className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-7 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {mutation.isPending ? (
-              <><Loader2 className="h-5 w-5 animate-spin" /> Analyzing…</>
-            ) : (
-              <>Analyze <ArrowRight className="h-5 w-5" /></>
-            )}
-          </button>
+
+          {showError ? (
+            <p
+              id={errorId}
+              role="alert"
+              className="mt-3 flex items-start gap-2 px-2 text-sm font-medium text-destructive"
+            >
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>{(validation as { ok: false; error: string }).error}</span>
+            </p>
+          ) : (
+            <p
+              id={hintId}
+              className="mt-3 flex items-start gap-2 px-2 text-xs text-muted-foreground"
+            >
+              <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary/70" />
+              <span>
+                Format: <span className="font-medium text-foreground">Village, LGA, State</span> — country is optional.
+                Use 2–120 characters, letters, numbers, spaces, commas or hyphens.
+              </span>
+            </p>
+          )}
         </form>
 
         <p className="mt-3 text-center text-xs text-muted-foreground">
-          Try: <button type="button" onClick={() => setLocation("Ado LGA, Ekiti State")} className="underline underline-offset-2 hover:text-primary">Ado LGA, Ekiti State</button>
+          Try: <button type="button" onClick={() => { setLocation("Ado LGA, Ekiti State"); setTouched(false); }} className="underline underline-offset-2 hover:text-primary">Ado LGA, Ekiti State</button>
           {" · "}
-          <button type="button" onClick={() => setLocation("Kano State")} className="underline underline-offset-2 hover:text-primary">Kano State</button>
+          <button type="button" onClick={() => { setLocation("Kano State"); setTouched(false); }} className="underline underline-offset-2 hover:text-primary">Kano State</button>
           {" · "}
-          <button type="button" onClick={() => setLocation("Ogbomosho, Oyo")} className="underline underline-offset-2 hover:text-primary">Ogbomosho, Oyo</button>
+          <button type="button" onClick={() => { setLocation("Ogbomosho, Oyo"); setTouched(false); }} className="underline underline-offset-2 hover:text-primary">Ogbomosho, Oyo</button>
         </p>
 
         {mutation.isPending && (
@@ -390,6 +464,7 @@ export function InteractiveDemo() {
             Analyzing “{location.trim()}” — this usually takes 5–10 seconds.
           </div>
         )}
+
 
         <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:items-start">
           <div className="lg:sticky lg:top-24">
