@@ -456,11 +456,9 @@ export function InteractiveDemo() {
                   setOpen(true);
                 }}
                 onFocus={() => {
-                  setFocused(true);
                   setOpen(true);
                 }}
                 onBlur={() => {
-                  setFocused(false);
                   setTouched(true);
                 }}
                 onKeyDown={onKeyDown}
