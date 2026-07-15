@@ -371,7 +371,6 @@ export function InteractiveDemo() {
   // Autocomplete state
   const [open, setOpen] = useState(false);
   const [highlight, setHighlight] = useState(0);
-  const [focused, setFocused] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const suggestions = useMemo(() => searchSuggestions(location, 7), [location]);
 
