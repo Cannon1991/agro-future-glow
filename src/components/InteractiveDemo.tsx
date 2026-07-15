@@ -366,10 +366,60 @@ export function InteractiveDemo() {
   const inputId = "demo-location";
   const hintId = "demo-location-hint";
   const errorId = "demo-location-error";
+  const listboxId = useId();
+
+  // Autocomplete state
+  const [open, setOpen] = useState(false);
+  const [highlight, setHighlight] = useState(0);
+  const [focused, setFocused] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const suggestions = useMemo(() => searchSuggestions(location, 7), [location]);
+
+  useEffect(() => {
+    setHighlight(0);
+  }, [location]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open]);
+
+  const pickSuggestion = (s: Suggestion) => {
+    setLocation(s.value);
+    setOpen(false);
+    setTouched(false);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!open && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+      setOpen(true);
+      return;
+    }
+    if (!open) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setHighlight((h) => Math.min(h + 1, suggestions.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setHighlight((h) => Math.max(h - 1, 0));
+    } else if (e.key === "Enter" && suggestions[highlight]) {
+      e.preventDefault();
+      pickSuggestion(suggestions[highlight]);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
+    setOpen(false);
     if (!validation.ok) return;
     mutation.mutate(validation.value);
   };
