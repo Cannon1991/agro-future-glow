@@ -1,9 +1,17 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef, useId } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle, Info } from "lucide-react";
+import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle, Info, Building2, Landmark, Home, Globe2 } from "lucide-react";
 import { z } from "zod";
 import { analyzeLocation, type DemoAnalysis } from "@/lib/demo.functions";
+import { searchSuggestions, type Suggestion } from "@/lib/ng-suggestions";
+
+const KIND_ICON: Record<Suggestion["kind"], typeof MapPin> = {
+  village: Home,
+  lga: Building2,
+  state: Landmark,
+  country: Globe2,
+};
 
 // Client-side validation for the location query.
 // Accepts formats like:
