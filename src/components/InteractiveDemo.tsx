@@ -447,17 +447,35 @@ export function InteractiveDemo() {
           className="mx-auto mt-10 max-w-2xl"
         >
           <div className="flex flex-col gap-3 sm:flex-row">
-            <div className="relative flex-1">
+            <div ref={wrapRef} className="relative flex-1">
               <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <input
                 id={inputId}
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                onBlur={() => setTouched(true)}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  setOpen(true);
+                }}
+                onFocus={() => {
+                  setFocused(true);
+                  setOpen(true);
+                }}
+                onBlur={() => {
+                  setFocused(false);
+                  setTouched(true);
+                }}
+                onKeyDown={onKeyDown}
                 maxLength={120}
                 autoComplete="off"
                 spellCheck={false}
-                placeholder="e.g. Ado LGA, Ekiti State, Nigeria"
+                role="combobox"
+                aria-expanded={open}
+                aria-controls={listboxId}
+                aria-autocomplete="list"
+                aria-activedescendant={
+                  open && suggestions[highlight] ? `${listboxId}-opt-${highlight}` : undefined
+                }
+                placeholder="Try: Ado Ekiti LGA, Ekiti State"
                 aria-label="Village, local government, state or country"
                 aria-invalid={showError || undefined}
                 aria-describedby={showError ? `${hintId} ${errorId}` : hintId}
@@ -467,6 +485,56 @@ export function InteractiveDemo() {
                     : "border-border focus:border-primary focus:ring-primary/30"
                 }`}
               />
+              {open && suggestions.length > 0 && (
+                <ul
+                  id={listboxId}
+                  role="listbox"
+                  className="absolute left-0 right-0 top-full z-30 mt-2 max-h-80 overflow-auto rounded-2xl border border-border bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-elevated)]"
+                >
+                  <li className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    {location.trim() ? "Matches" : "Nigeria-first suggestions"}
+                  </li>
+                  {suggestions.map((s, i) => {
+                    const Icon = KIND_ICON[s.kind];
+                    const active = i === highlight;
+                    return (
+                      <li
+                        key={`${s.value}-${i}`}
+                        id={`${listboxId}-opt-${i}`}
+                        role="option"
+                        aria-selected={active}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          pickSuggestion(s);
+                        }}
+                        onMouseEnter={() => setHighlight(i)}
+                        className={`flex cursor-pointer items-start gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                          active ? "bg-primary/10 text-foreground" : "text-foreground hover:bg-secondary"
+                        }`}
+                      >
+                        <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
+                          <Icon className="h-3.5 w-3.5" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate font-medium">{s.label}</span>
+                          <span className="block truncate text-xs text-muted-foreground">
+                            {s.hint}
+                          </span>
+                        </span>
+                        <span className="mt-1 shrink-0 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                          {s.kind}
+                        </span>
+                      </li>
+                    );
+                  })}
+                  <li className="mt-1 border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
+                    Format examples:{" "}
+                    <span className="font-medium text-foreground">Village, LGA, State</span>{" · "}
+                    <span className="font-medium text-foreground">LGA, State</span>{" · "}
+                    <span className="font-medium text-foreground">State, Country</span>
+                  </li>
+                </ul>
+              )}
             </div>
             <button
               type="submit"
@@ -480,6 +548,7 @@ export function InteractiveDemo() {
               )}
             </button>
           </div>
+
 
           {showError ? (
             <p
