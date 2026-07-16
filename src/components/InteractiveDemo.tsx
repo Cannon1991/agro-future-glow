@@ -378,18 +378,42 @@ export function InteractiveDemo() {
     setHighlight(0);
   }, [location]);
 
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scheduleClose = () => {
+    closeTimeoutRef.current = setTimeout(() => setOpen(false), 120);
+  };
+  const cancelClose = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
   useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+    const node = wrapRef.current;
+    if (!open || !node) return;
+
+    const onDoc = (e: MouseEvent | TouchEvent) => {
+      if (node.contains(e.target as Node)) {
+        // Click/touch inside the wrapper cancels any scheduled close so
+        // selecting a suggestion or re-focusing the input keeps the dropdown open.
+        cancelClose();
+      } else {
         setOpen(false);
       }
     };
+
     document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
+    document.addEventListener("touchstart", onDoc, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("touchstart", onDoc);
+      cancelClose();
+    };
   }, [open]);
 
   const pickSuggestion = (s: Suggestion) => {
+    cancelClose();
     setLocation(s.value);
     setOpen(false);
     setTouched(false);
@@ -456,10 +480,14 @@ export function InteractiveDemo() {
                   setOpen(true);
                 }}
                 onFocus={() => {
+                  cancelClose();
                   setOpen(true);
                 }}
                 onBlur={() => {
                   setTouched(true);
+                  // Defer closing so touch/mouse clicks on the dropdown still
+                  // register before the dropdown disappears.
+                  scheduleClose();
                 }}
                 onKeyDown={onKeyDown}
                 maxLength={120}
