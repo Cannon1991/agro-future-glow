@@ -379,29 +379,31 @@ export function InteractiveDemo() {
   }, [location]);
 
   useEffect(() => {
-    if (!open) return;
+    const node = wrapRef.current;
+    if (!open || !node) return;
+
     const onDoc = (e: MouseEvent | TouchEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+      if (!node.contains(e.target as Node)) {
         setOpen(false);
       }
     };
+
+    const onFocusOut = (e: FocusEvent) => {
+      // Close when focus leaves the autocomplete wrapper entirely.
+      if (!node.contains(e.relatedTarget as Node)) {
+        setOpen(false);
+      }
+    };
+
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("touchstart", onDoc, { passive: true });
+    node.addEventListener("focusout", onFocusOut);
     return () => {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("touchstart", onDoc);
+      node.removeEventListener("focusout", onFocusOut);
     };
   }, [open]);
-
-  const onWrapperBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    // Close when focus leaves the autocomplete wrapper entirely.
-    if (
-      wrapRef.current &&
-      !wrapRef.current.contains(e.relatedTarget as Node)
-    ) {
-      setOpen(false);
-    }
-  };
 
   const pickSuggestion = (s: Suggestion) => {
     setLocation(s.value);
