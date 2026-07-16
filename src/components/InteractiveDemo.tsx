@@ -393,6 +393,16 @@ export function InteractiveDemo() {
     };
   }, [open]);
 
+  const onWrapperBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    // Close when focus leaves the autocomplete wrapper entirely.
+    if (
+      wrapRef.current &&
+      !wrapRef.current.contains(e.relatedTarget as Node)
+    ) {
+      setOpen(false);
+    }
+  };
+
   const pickSuggestion = (s: Suggestion) => {
     setLocation(s.value);
     setOpen(false);
