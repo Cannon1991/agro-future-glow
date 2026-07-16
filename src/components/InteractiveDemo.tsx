@@ -378,34 +378,42 @@ export function InteractiveDemo() {
     setHighlight(0);
   }, [location]);
 
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scheduleClose = () => {
+    closeTimeoutRef.current = setTimeout(() => setOpen(false), 120);
+  };
+  const cancelClose = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
   useEffect(() => {
     const node = wrapRef.current;
     if (!open || !node) return;
 
     const onDoc = (e: MouseEvent | TouchEvent) => {
-      if (!node.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    const onFocusOut = (e: FocusEvent) => {
-      // Close when focus leaves the autocomplete wrapper entirely.
-      if (!node.contains(e.relatedTarget as Node)) {
+      if (node.contains(e.target as Node)) {
+        // Click/touch inside the wrapper cancels any scheduled close so
+        // selecting a suggestion or re-focusing the input keeps the dropdown open.
+        cancelClose();
+      } else {
         setOpen(false);
       }
     };
 
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("touchstart", onDoc, { passive: true });
-    node.addEventListener("focusout", onFocusOut);
     return () => {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("touchstart", onDoc);
-      node.removeEventListener("focusout", onFocusOut);
+      cancelClose();
     };
   }, [open]);
 
   const pickSuggestion = (s: Suggestion) => {
+    cancelClose();
     setLocation(s.value);
     setOpen(false);
     setTouched(false);
