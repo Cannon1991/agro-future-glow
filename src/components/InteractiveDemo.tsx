@@ -462,8 +462,15 @@ export function InteractiveDemo() {
                 onFocus={() => {
                   setOpen(true);
                 }}
-                onBlur={() => {
+                onBlur={(e) => {
                   setTouched(true);
+                  // Close the dropdown when focus moves outside the autocomplete wrapper.
+                  if (
+                    wrapRef.current &&
+                    !wrapRef.current.contains(e.relatedTarget as Node)
+                  ) {
+                    setOpen(false);
+                  }
                 }}
                 onKeyDown={onKeyDown}
                 maxLength={120}
