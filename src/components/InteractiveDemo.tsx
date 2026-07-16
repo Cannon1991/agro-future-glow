@@ -516,7 +516,7 @@ export function InteractiveDemo() {
                   role="listbox"
                   className="absolute left-0 right-0 top-full z-30 mt-2 max-h-80 overflow-auto rounded-2xl border border-border bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-elevated)]"
                 >
-                  <li className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                  <li role="presentation" className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
                     {location.trim() ? "Matches" : "Nigeria-first suggestions"}
                   </li>
                   {suggestions.map((s, i) => {
@@ -552,7 +552,7 @@ export function InteractiveDemo() {
                       </li>
                     );
                   })}
-                  <li className="mt-1 border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
+                  <li role="presentation" className="mt-1 border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
                     Format examples:{" "}
                     <span className="font-medium text-foreground">Village, LGA, State</span>{" · "}
                     <span className="font-medium text-foreground">LGA, State</span>{" · "}
