@@ -460,7 +460,7 @@ export function InteractiveDemo() {
           className="mx-auto mt-10 max-w-2xl"
         >
           <div className="flex flex-col gap-3 sm:flex-row">
-            <div ref={wrapRef} className="relative flex-1">
+            <div ref={wrapRef} onBlur={onWrapperBlur} className="relative flex-1">
               <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <input
                 id={inputId}
