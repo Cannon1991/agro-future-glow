@@ -582,11 +582,13 @@ export function InteractiveDemo() {
                 }
                 placeholder="Try: Ado Ekiti LGA, Ekiti State"
                 aria-label="Village, local government, state or country"
-                aria-invalid={showError || undefined}
-                aria-describedby={showError ? `${hintId} ${errorId}` : hintId}
+                aria-invalid={showError || highlightInvalid || undefined}
+                aria-describedby={
+                  showError || highlightInvalid ? `${hintId} ${errorId}` : hintId
+                }
                 className={`h-14 w-full rounded-full border bg-card pl-12 pr-5 text-base text-foreground shadow-[var(--shadow-soft)] outline-none transition focus:ring-2 ${
-                  showError
-                    ? "border-destructive focus:border-destructive focus:ring-destructive/30"
+                  showError || highlightInvalid
+                    ? "border-destructive bg-destructive/[0.03] focus:border-destructive focus:ring-destructive/30"
                     : "border-border focus:border-primary focus:ring-primary/30"
                 }`}
               />
