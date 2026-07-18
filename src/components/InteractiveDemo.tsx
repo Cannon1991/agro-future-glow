@@ -405,12 +405,28 @@ export function InteractiveDemo() {
   });
 
   const [touched, setTouched] = useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
   const validation = useMemo(() => validateLocation(location), [location]);
   const showError = touched && !validation.ok && location.trim().length > 0;
   const inputId = "demo-location";
   const hintId = "demo-location-hint";
   const errorId = "demo-location-error";
+  const summaryId = "demo-form-errors";
   const listboxId = useId();
+  const summaryRef = useRef<HTMLDivElement>(null);
+
+  const formErrors: FieldError[] = useMemo(() => {
+    if (validation.ok) return [];
+    return [{ id: inputId, label: "Location", message: validation.error }];
+  }, [validation]);
+
+  const focusField = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.focus();
+    }
+  };
 
   // Autocomplete state
   const [open, setOpen] = useState(false);
