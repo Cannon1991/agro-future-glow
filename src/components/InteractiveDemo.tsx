@@ -409,6 +409,9 @@ export function InteractiveDemo() {
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const validation = useMemo(() => validateLocation(location), [location]);
   const showError = touched && !validation.ok && location.trim().length > 0;
+  // Highlight the field as soon as the top-level error summary is shown,
+  // even if the user has not blurred the input yet (e.g. empty submit).
+  const highlightInvalid = submitAttempted && !validation.ok;
   const inputId = "demo-location";
   const hintId = "demo-location-hint";
   const errorId = "demo-location-error";
@@ -579,11 +582,13 @@ export function InteractiveDemo() {
                 }
                 placeholder="Try: Ado Ekiti LGA, Ekiti State"
                 aria-label="Village, local government, state or country"
-                aria-invalid={showError || undefined}
-                aria-describedby={showError ? `${hintId} ${errorId}` : hintId}
+                aria-invalid={showError || highlightInvalid || undefined}
+                aria-describedby={
+                  showError || highlightInvalid ? `${hintId} ${errorId}` : hintId
+                }
                 className={`h-14 w-full rounded-full border bg-card pl-12 pr-5 text-base text-foreground shadow-[var(--shadow-soft)] outline-none transition focus:ring-2 ${
-                  showError
-                    ? "border-destructive focus:border-destructive focus:ring-destructive/30"
+                  showError || highlightInvalid
+                    ? "border-destructive bg-destructive/[0.03] focus:border-destructive focus:ring-destructive/30"
                     : "border-border focus:border-primary focus:ring-primary/30"
                 }`}
               />
@@ -652,7 +657,7 @@ export function InteractiveDemo() {
           </div>
 
 
-          {showError ? (
+          {showError || highlightInvalid ? (
             <p
               id={errorId}
               role="alert"
@@ -766,6 +771,10 @@ export function InteractiveDemo() {
                         onClick={() => {
                           mutation.reset();
                           setSubmitted(null);
+                          setSubmitAttempted(false);
+                          setTouched(false);
+                          setLocation("");
+                          document.getElementById(inputId)?.focus();
                         }}
                         className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground transition hover:bg-secondary"
                       >
