@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef, useId } from "react";
+import { useState, useMemo, useEffect, useRef, useId, forwardRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, Satellite, Sparkles, MapPin, ArrowRight, AlertTriangle, CheckCircle2, Circle, Info, Building2, Landmark, Home, Globe2 } from "lucide-react";
@@ -41,6 +41,51 @@ function validateLocation(raw: string): { ok: true; value: string } | { ok: fals
   if (result.success) return { ok: true, value: result.data };
   return { ok: false, error: result.error.issues[0]?.message ?? "Invalid location." };
 }
+
+type FieldError = { id: string; label: string; message: string };
+
+const FormErrorSummary = forwardRef<HTMLDivElement, {
+  id?: string;
+  errors: FieldError[];
+  onFocusField: (id: string) => void;
+}>(function FormErrorSummary({ id, errors, onFocusField }, ref) {
+  if (errors.length === 0) return null;
+  return (
+    <div
+      ref={ref}
+      id={id}
+      tabIndex={-1}
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      className="rounded-2xl border border-destructive/30 bg-destructive/5 p-4"
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+          <AlertTriangle className="h-4 w-4 text-destructive" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-destructive">
+            Please fix the following {errors.length === 1 ? "error" : `${errors.length} errors`} to continue:
+          </p>
+          <ul className="mt-2 list-inside list-disc space-y-1 text-sm text-muted-foreground">
+            {errors.map((err) => (
+              <li key={err.id}>
+                <button
+                  type="button"
+                  onClick={() => onFocusField(err.id)}
+                  className="inline-flex items-center gap-1 font-medium text-destructive underline underline-offset-2 transition hover:text-destructive/80"
+                >
+                  {err.label}: {err.message}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 
 const DEMO_STEPS = [
@@ -361,12 +406,28 @@ export function InteractiveDemo() {
   });
 
   const [touched, setTouched] = useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
   const validation = useMemo(() => validateLocation(location), [location]);
   const showError = touched && !validation.ok && location.trim().length > 0;
   const inputId = "demo-location";
   const hintId = "demo-location-hint";
   const errorId = "demo-location-error";
+  const summaryId = "demo-form-errors";
   const listboxId = useId();
+  const summaryRef = useRef<HTMLDivElement>(null);
+
+  const formErrors: FieldError[] = useMemo(() => {
+    if (validation.ok) return [];
+    return [{ id: inputId, label: "Location", message: validation.error }];
+  }, [validation]);
+
+  const focusField = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.focus();
+    }
+  };
 
   // Autocomplete state
   const [open, setOpen] = useState(false);
@@ -442,8 +503,14 @@ export function InteractiveDemo() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
+    setSubmitAttempted(true);
     setOpen(false);
-    if (!validation.ok) return;
+    if (!validation.ok) {
+      // Move focus to the summary so screen readers announce the errors and
+      // users can jump straight to the offending field.
+      setTimeout(() => summaryRef.current?.focus(), 0);
+      return;
+    }
     mutation.mutate(validation.value);
   };
 
@@ -469,6 +536,16 @@ export function InteractiveDemo() {
           noValidate
           className="mx-auto mt-10 max-w-2xl"
         >
+          {submitAttempted && formErrors.length > 0 && (
+            <div className="mb-4">
+              <FormErrorSummary
+                ref={summaryRef}
+                id={summaryId}
+                errors={formErrors}
+                onFocusField={focusField}
+              />
+            </div>
+          )}
           <div className="flex flex-col gap-3 sm:flex-row">
             <div ref={wrapRef} className="relative flex-1">
               <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
