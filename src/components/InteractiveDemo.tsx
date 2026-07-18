@@ -502,8 +502,14 @@ export function InteractiveDemo() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
+    setSubmitAttempted(true);
     setOpen(false);
-    if (!validation.ok) return;
+    if (!validation.ok) {
+      // Move focus to the summary so screen readers announce the errors and
+      // users can jump straight to the offending field.
+      setTimeout(() => summaryRef.current?.focus(), 0);
+      return;
+    }
     mutation.mutate(validation.value);
   };
 
