@@ -409,6 +409,9 @@ export function InteractiveDemo() {
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const validation = useMemo(() => validateLocation(location), [location]);
   const showError = touched && !validation.ok && location.trim().length > 0;
+  // Highlight the field as soon as the top-level error summary is shown,
+  // even if the user has not blurred the input yet (e.g. empty submit).
+  const highlightInvalid = submitAttempted && !validation.ok;
   const inputId = "demo-location";
   const hintId = "demo-location-hint";
   const errorId = "demo-location-error";
