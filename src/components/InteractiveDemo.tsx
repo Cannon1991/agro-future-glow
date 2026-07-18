@@ -536,6 +536,16 @@ export function InteractiveDemo() {
           noValidate
           className="mx-auto mt-10 max-w-2xl"
         >
+          {submitAttempted && formErrors.length > 0 && (
+            <div className="mb-4">
+              <FormErrorSummary
+                ref={summaryRef}
+                id={summaryId}
+                errors={formErrors}
+                onFocusField={focusField}
+              />
+            </div>
+          )}
           <div className="flex flex-col gap-3 sm:flex-row">
             <div ref={wrapRef} className="relative flex-1">
               <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
