@@ -44,16 +44,17 @@ function validateLocation(raw: string): { ok: true; value: string } | { ok: fals
 
 type FieldError = { id: string; label: string; message: string };
 
-function FormErrorSummary({
-  errors,
-  onFocusField,
-}: {
+const FormErrorSummary = React.forwardRef<HTMLDivElement, {
+  id?: string;
   errors: FieldError[];
   onFocusField: (id: string) => void;
-}) {
+}>(function FormErrorSummary({ id, errors, onFocusField }, ref) {
   if (errors.length === 0) return null;
   return (
     <div
+      ref={ref}
+      id={id}
+      tabIndex={-1}
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
@@ -84,7 +85,7 @@ function FormErrorSummary({
       </div>
     </div>
   );
-}
+});
 
 
 const DEMO_STEPS = [
