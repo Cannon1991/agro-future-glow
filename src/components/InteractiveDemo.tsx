@@ -42,6 +42,50 @@ function validateLocation(raw: string): { ok: true; value: string } | { ok: fals
   return { ok: false, error: result.error.issues[0]?.message ?? "Invalid location." };
 }
 
+type FieldError = { id: string; label: string; message: string };
+
+function FormErrorSummary({
+  errors,
+  onFocusField,
+}: {
+  errors: FieldError[];
+  onFocusField: (id: string) => void;
+}) {
+  if (errors.length === 0) return null;
+  return (
+    <div
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      className="rounded-2xl border border-destructive/30 bg-destructive/5 p-4"
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+          <AlertTriangle className="h-4 w-4 text-destructive" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-destructive">
+            Please fix the following {errors.length === 1 ? "error" : `${errors.length} errors`} to continue:
+          </p>
+          <ul className="mt-2 list-inside list-disc space-y-1 text-sm text-muted-foreground">
+            {errors.map((err) => (
+              <li key={err.id}>
+                <button
+                  type="button"
+                  onClick={() => onFocusField(err.id)}
+                  className="inline-flex items-center gap-1 font-medium text-destructive underline underline-offset-2 transition hover:text-destructive/80"
+                >
+                  {err.label}: {err.message}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 const DEMO_STEPS = [
   { key: "geo", label: "Locating region & pulling boundaries" },
