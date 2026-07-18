@@ -44,7 +44,7 @@ function validateLocation(raw: string): { ok: true; value: string } | { ok: fals
 
 type FieldError = { id: string; label: string; message: string };
 
-const FormErrorSummary = React.forwardRef<HTMLDivElement, {
+const FormErrorSummary = forwardRef<HTMLDivElement, {
   id?: string;
   errors: FieldError[];
   onFocusField: (id: string) => void;
