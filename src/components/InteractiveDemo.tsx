@@ -579,6 +579,7 @@ export function InteractiveDemo() {
             <p
               id={errorId}
               role="alert"
+              aria-live="polite"
               className="mt-3 flex items-start gap-2 px-2 text-sm font-medium text-destructive"
             >
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
