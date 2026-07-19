@@ -114,10 +114,9 @@ async def main() -> int:
 
         # -- Correcting the input updates aria-describedby back to hint --
         print("Correcting input clears invalid state")
-        await field.click()
-        await field.fill("Ado LGA, Ekiti State")
+        await react_type(field, "Ado LGA, Ekiti State")
         await page.keyboard.press("Escape")
-        await page.wait_for_timeout(150)
+        await page.wait_for_timeout(200)
         aria_invalid = await field.get_attribute("aria-invalid")
         describedby_after = await field.get_attribute("aria-describedby")
         check(aria_invalid == "false", "aria-invalid returns to false after correction", failures)
