@@ -656,7 +656,7 @@ export function InteractiveDemo() {
           </div>
 
 
-          {showError || highlightInvalid ? (
+          {isInvalid ? (
             <p
               id={errorId}
               role="alert"
