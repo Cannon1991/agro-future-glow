@@ -63,7 +63,7 @@ async def main() -> int:
         # -- Blur while empty: touched but empty -> should stay valid (no error) --
         print("Blur while empty (not submitted)")
         await field.focus()
-        await page.locator("body").click(position={"x": 10, "y": 10})
+        await field.evaluate("el => el.blur()")
         await page.wait_for_timeout(250)
         aria_invalid = await field.get_attribute("aria-invalid")
         check(aria_invalid == "false", "empty blur before submit does not flag invalid", failures)
