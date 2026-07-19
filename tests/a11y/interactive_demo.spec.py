@@ -85,20 +85,16 @@ async def main() -> int:
 
         # -- Blur while empty: touched but empty -> should stay valid (no error) --
         print("Blur while empty (not submitted)")
-        await field.focus()
-        await field.evaluate("el => el.blur()")
-        await page.wait_for_timeout(250)
+        await field.scroll_into_view_if_needed()
+        await field.click()
+        await blur_field(page)
         aria_invalid = await field.get_attribute("aria-invalid")
         check(aria_invalid == "false", "empty blur before submit does not flag invalid", failures)
 
         # -- Type invalid characters and blur --
         print("Blur with invalid characters")
-        await react_type(field, "!!")
-        await page.keyboard.press("Escape")
-        await field.evaluate("el => el.blur()")
-        await page.wait_for_timeout(300)
-        aria_invalid = await field.get_attribute("aria-invalid")
-        describedby = await field.get_attribute("aria-describedby")
+        await clear_and_type(page, field, "!!")
+        await blur_field(page)
         aria_invalid = await field.get_attribute("aria-invalid")
         describedby = await field.get_attribute("aria-describedby")
         check(aria_invalid == "true", 'aria-invalid="true" after invalid blur', failures)
@@ -116,7 +112,7 @@ async def main() -> int:
 
         # -- Correcting the input updates aria-describedby back to hint --
         print("Correcting input clears invalid state")
-        await react_type(field, "Ado LGA, Ekiti State")
+        await clear_and_type(page, field, "Ado LGA, Ekiti State")
         await page.keyboard.press("Escape")
         await page.wait_for_timeout(200)
         aria_invalid = await field.get_attribute("aria-invalid")
