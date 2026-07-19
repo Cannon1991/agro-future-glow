@@ -124,15 +124,21 @@ async def main() -> int:
             failures,
         )
 
-        # -- Submit empty form: summary appears, receives focus, links to field --
-        print("Submit empty form")
+        # -- Submit with invalid content: summary appears, receives focus --
+        print("Submit invalid form")
         # Reload so `touched` resets and the submit button is enabled again.
         await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
         await page.wait_for_selector(FIELD, timeout=10000)
         field = page.locator(FIELD)
+        # Type invalid content but DO NOT blur, so `touched` stays false and the
+        # submit button remains enabled (button is disabled by touched && !ok).
+        await clear_and_type(page, field, "!!")
+        await page.keyboard.press("Escape")
         submit = page.get_by_role("button", name="Analyze")
-        await submit.click()
-        await page.wait_for_timeout(300)
+        # Submit via Enter on the field to avoid clicking the (now disabled) button.
+        await field.focus()
+        await page.evaluate("document.querySelector('form').requestSubmit()")
+        await page.wait_for_timeout(400)
 
         summary = page.locator('[role="alert"][aria-live="assertive"]').first
         await expect(summary).to_be_visible()
