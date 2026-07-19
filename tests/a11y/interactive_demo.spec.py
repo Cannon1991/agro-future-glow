@@ -72,10 +72,11 @@ async def main() -> int:
         print("Blur with invalid characters")
         await field.click()
         await field.fill("!!")  # too short + disallowed chars
-        # close autocomplete then blur
         await page.keyboard.press("Escape")
-        await page.locator("body").click(position={"x": 10, "y": 10})
+        await field.evaluate("el => el.blur()")
         await page.wait_for_timeout(300)
+        aria_invalid = await field.get_attribute("aria-invalid")
+        describedby = await field.get_attribute("aria-describedby")
         aria_invalid = await field.get_attribute("aria-invalid")
         describedby = await field.get_attribute("aria-describedby")
         check(aria_invalid == "true", 'aria-invalid="true" after invalid blur', failures)
