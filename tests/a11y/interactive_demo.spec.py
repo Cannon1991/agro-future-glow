@@ -26,6 +26,27 @@ SHOTS.mkdir(parents=True, exist_ok=True)
 FIELD = 'input[role="combobox"][aria-label="Village, local government, state or country"]'
 
 
+async def react_type(field, value: str) -> None:
+    """Set an input value in a way React's controlled inputs pick up.
+
+    Playwright's field.fill() dispatches an input event but React 19's
+    controlled onChange handler doesn't always observe the mutation. Using the
+    native value setter + input event mirrors how a real keystroke reaches the
+    React fiber and reliably updates state.
+    """
+    await field.evaluate(
+        """(el, v) => {
+            el.focus();
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value'
+            ).set;
+            setter.call(el, v);
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+        }""",
+        value,
+    )
+
+
 def check(cond: bool, msg: str, failures: list[str]) -> None:
     marker = "✓" if cond else "✗"
     print(f"  {marker} {msg}")
