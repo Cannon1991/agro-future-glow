@@ -154,18 +154,18 @@ async def main() -> int:
 
         aria_invalid = await field.get_attribute("aria-invalid")
         describedby = await field.get_attribute("aria-describedby")
-        check(aria_invalid == "true", "aria-invalid=true on empty submit (highlight)", failures)
-        check(describedby != hint_id, "aria-describedby -> error id on empty submit", failures)
+        check(aria_invalid == "true", "aria-invalid=true after invalid submit", failures)
+        check(describedby != hint_id, "aria-describedby -> error id after submit", failures)
 
-        # Summary link focuses field on activation
-        link = summary.get_by_role("link").first
-        await link.click()
+        # Summary "field: message" activator focuses the field.
+        activator = summary.get_by_role("button").first
+        await activator.click()
         await page.wait_for_timeout(200)
         field_id = await field.get_attribute("id")
         focused_id = await page.evaluate("document.activeElement?.id || ''")
-        check(focused_id == field_id, "summary link moves focus to the field", failures)
+        check(focused_id == field_id, "summary activator moves focus to the field", failures)
 
-        await page.screenshot(path=str(SHOTS / "empty_submit.png"))
+        await page.screenshot(path=str(SHOTS / "invalid_submit.png"))
 
         await browser.close()
 
