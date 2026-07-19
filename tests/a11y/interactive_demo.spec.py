@@ -91,8 +91,7 @@ async def main() -> int:
 
         # -- Type invalid characters and blur --
         print("Blur with invalid characters")
-        await field.click()
-        await field.fill("!!")  # too short + disallowed chars
+        await react_type(field, "!!")
         await page.keyboard.press("Escape")
         await field.evaluate("el => el.blur()")
         await page.wait_for_timeout(300)
