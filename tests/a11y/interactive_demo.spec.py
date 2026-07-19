@@ -109,9 +109,10 @@ async def main() -> int:
 
         # -- Submit empty form: summary appears, receives focus, links to field --
         print("Submit empty form")
-        await field.click()
-        await field.fill("")
-        await page.keyboard.press("Escape")
+        # Reload so `touched` resets and the submit button is enabled again.
+        await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
+        await page.wait_for_selector(FIELD, timeout=10000)
+        field = page.locator(FIELD)
         submit = page.get_by_role("button", name="Analyze")
         await submit.click()
         await page.wait_for_timeout(300)
