@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
-import { generateText, Output } from "ai";
+import { generateText } from "ai";
+
 import { z } from "zod";
 import { createLovableAiGatewayProvider } from "./ai-gateway.server";
 
@@ -34,6 +35,15 @@ export type DemoAnalysis = z.infer<typeof Schema>;
 const clamp = (n: number, min: number, max: number) =>
   Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : min;
 
+function extractJson(text: string): unknown {
+  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const raw = fenced ? fenced[1] : text;
+  const start = raw.indexOf("{");
+  const end = raw.lastIndexOf("}");
+  if (start === -1 || end === -1) throw new Error("Model did not return JSON");
+  return JSON.parse(raw.slice(start, end + 1));
+}
+
 export const analyzeLocation = createServerFn({ method: "POST" })
   .inputValidator((raw: unknown) => Input.parse(raw))
   .handler(async ({ data }): Promise<DemoAnalysis> => {
@@ -41,25 +51,37 @@ export const analyzeLocation = createServerFn({ method: "POST" })
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
     const gateway = createLovableAiGatewayProvider(key);
 
-    const { output } = await generateText({
+    const { text } = await generateText({
       model: gateway("google/gemini-2.5-flash"),
-      output: Output.object({ schema: Schema }),
       system:
-        "You are an agronomist for AgroPulse Fix, a digital agriculture platform for Nigeria and West Africa. Return realistic, region-appropriate crop suitability data. Prefer staple and cash crops actually grown in the requested area. Values must be plausible for smallholder farming. Always return 3-5 crops and 2-4 risks.",
-      prompt: `Location: "${data.location}". Produce a parcel-detection & crop suitability briefing.`,
+        "You are an agronomist for AgroPulse Fix, a digital agriculture platform for Nigeria and West Africa. Return realistic, region-appropriate crop suitability data. Prefer staple and cash crops actually grown in the requested area. Values must be plausible for smallholder farming. Reply with raw JSON only — no prose, no markdown fences.",
+      prompt: `Location: "${data.location}". Produce a parcel-detection & crop suitability briefing as JSON matching exactly this shape:
+{
+  "region": string,
+  "climate": string,
+  "soil": string,
+  "parcels": { "detected": number, "avgHectares": number },
+  "crops": [{ "name": string, "suitability": number, "window": string, "note": string }],
+  "risks": [string],
+  "advisory": string
+}
+Include 3-5 crops and 2-4 risks. suitability is 0-100.`,
     });
 
+    const parsed = Schema.parse(extractJson(text));
+
     return {
-      ...output,
+      ...parsed,
       parcels: {
-        detected: Math.round(clamp(output.parcels.detected, 20, 9999)),
-        avgHectares: clamp(output.parcels.avgHectares, 0.2, 50),
+        detected: Math.round(clamp(parsed.parcels.detected, 20, 9999)),
+        avgHectares: clamp(parsed.parcels.avgHectares, 0.2, 50),
       },
-      crops: output.crops.slice(0, 5).map((c) => ({
+      crops: parsed.crops.slice(0, 5).map((c) => ({
         ...c,
         suitability: Math.round(clamp(c.suitability, 0, 100)),
       })),
-      risks: output.risks.slice(0, 4),
+      risks: parsed.risks.slice(0, 4),
     };
   });
+
 
