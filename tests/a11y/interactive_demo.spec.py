@@ -61,6 +61,7 @@ def check(cond: bool, msg: str, failures: list[str]) -> None:
 
 VIEWPORTS = [
     ("desktop", {"width": 1280, "height": 1800}, False),
+    ("tablet", {"width": 768, "height": 1024}, True),
     ("mobile", {"width": 390, "height": 844}, True),
 ]
 
