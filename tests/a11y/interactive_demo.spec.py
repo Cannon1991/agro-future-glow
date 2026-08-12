@@ -36,17 +36,20 @@ async def clear_and_type(page, field, value: str) -> None:
     """
     await field.scroll_into_view_if_needed()
     await field.click()
+    await expect(field).to_be_focused()
     await page.keyboard.press("Control+a")
     await page.keyboard.press("Delete")
     if value:
         await page.keyboard.type(value, delay=40)
+        await expect(field).to_have_value(value)
 
 
 async def blur_field(page) -> None:
     """Move focus off the input and let scheduled close timers run."""
     await page.keyboard.press("Escape")  # close autocomplete first
-    await page.keyboard.press("Tab")
-    await page.wait_for_timeout(300)
+    await page.evaluate("document.activeElement?.blur?.()")
+    await page.wait_for_timeout(350)
+
 
 
 def check(cond: bool, msg: str, failures: list[str]) -> None:
