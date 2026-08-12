@@ -56,117 +56,121 @@ def check(cond: bool, msg: str, failures: list[str]) -> None:
         failures.append(msg)
 
 
+VIEWPORTS = [
+    ("desktop", {"width": 1280, "height": 1800}, False),
+    ("mobile", {"width": 390, "height": 844}, True),
+]
+
+
+async def run_suite(page, label: str, failures: list[str]) -> None:
+    def chk(cond: bool, msg: str) -> None:
+        check(cond, f"[{label}] {msg}", failures)
+
+    await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
+    await page.wait_for_selector(FIELD, timeout=10000)
+    field = page.locator(FIELD)
+
+    # -- Initial state: valid, describedby -> hint --
+    print(f"[{label}] Initial state")
+    aria_invalid = await field.get_attribute("aria-invalid")
+    describedby = await field.get_attribute("aria-describedby")
+    chk(aria_invalid == "false", 'aria-invalid="false" before interaction')
+    chk(
+        describedby is not None and page.locator(f"#{describedby}").first is not None,
+        "aria-describedby points to an existing element (hint)",
+    )
+    hint_id = describedby
+    hint_el = page.locator(f"#{hint_id}")
+    await expect(hint_el).to_be_visible()
+    chk(await hint_el.get_attribute("role") != "alert", "hint element has no alert role")
+
+    # -- Blur while empty: touched but empty -> should stay valid (no error) --
+    print(f"[{label}] Blur while empty (not submitted)")
+    await field.scroll_into_view_if_needed()
+    await field.click()
+    await blur_field(page)
+    aria_invalid = await field.get_attribute("aria-invalid")
+    chk(aria_invalid == "false", "empty blur before submit does not flag invalid")
+
+    # -- Type invalid characters and blur --
+    print(f"[{label}] Blur with invalid characters")
+    await clear_and_type(page, field, "!!")
+    await blur_field(page)
+    aria_invalid = await field.get_attribute("aria-invalid")
+    describedby = await field.get_attribute("aria-describedby")
+    chk(aria_invalid == "true", 'aria-invalid="true" after invalid blur')
+    chk(describedby != hint_id, "aria-describedby now points to the error id")
+    err = page.locator(f"#{describedby}")
+    await expect(err).to_be_visible()
+    chk(await err.get_attribute("role") == "alert", 'error text has role="alert"')
+    chk(await err.get_attribute("aria-live") == "polite", 'error text has aria-live="polite"')
+    chk(len((await err.inner_text()).strip()) > 0, "error text is non-empty")
+
+    # -- Correcting the input updates aria-describedby back to hint --
+    print(f"[{label}] Correcting input clears invalid state")
+    await clear_and_type(page, field, "Ado LGA, Ekiti State")
+    await page.keyboard.press("Escape")
+    await page.wait_for_timeout(200)
+    aria_invalid = await field.get_attribute("aria-invalid")
+    describedby_after = await field.get_attribute("aria-describedby")
+    chk(aria_invalid == "false", "aria-invalid returns to false after correction")
+    chk(describedby_after == hint_id, "aria-describedby returns to the hint id after correction")
+
+    # -- Submit with invalid content: summary appears, receives focus --
+    print(f"[{label}] Submit invalid form")
+    await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
+    await page.wait_for_selector(FIELD, timeout=10000)
+    field = page.locator(FIELD)
+    await clear_and_type(page, field, "!!")
+    await page.keyboard.press("Escape")
+    await field.focus()
+    await page.evaluate("document.querySelector('form').requestSubmit()")
+    await page.wait_for_timeout(400)
+
+    summary = page.locator('[role="alert"][aria-live="assertive"]').first
+    await expect(summary).to_be_visible()
+    chk(await summary.get_attribute("tabindex") == "-1", "summary is focusable (tabindex=-1)")
+
+    focused_id = await page.evaluate("document.activeElement?.id || ''")
+    summary_id = await summary.get_attribute("id")
+    chk(
+        focused_id == summary_id,
+        f"focus moved to summary on submit (focused={focused_id!r}, summary={summary_id!r})",
+    )
+
+    aria_invalid = await field.get_attribute("aria-invalid")
+    describedby = await field.get_attribute("aria-describedby")
+    chk(aria_invalid == "true", "aria-invalid=true after invalid submit")
+    chk(describedby != hint_id, "aria-describedby -> error id after submit")
+
+    # Summary "field: message" activator focuses the field.
+    activator = summary.get_by_role("button").first
+    await activator.click()
+    await page.wait_for_timeout(200)
+    field_id = await field.get_attribute("id")
+    focused_id = await page.evaluate("document.activeElement?.id || ''")
+    chk(focused_id == field_id, "summary activator moves focus to the field")
+
+    await page.screenshot(path=str(SHOTS / f"invalid_submit_{label}.png"))
+
+
 async def main() -> int:
     failures: list[str] = []
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(headless=True)
-        ctx = await browser.new_context(viewport={"width": 1280, "height": 1800})
-        page = await ctx.new_page()
-
-        await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
-        await page.wait_for_selector(FIELD, timeout=10000)
-        field = page.locator(FIELD)
-
-        # -- Initial state: valid, describedby -> hint --
-        print("Initial state")
-        aria_invalid = await field.get_attribute("aria-invalid")
-        describedby = await field.get_attribute("aria-describedby")
-        check(aria_invalid == "false", 'aria-invalid="false" before interaction', failures)
-        check(
-            describedby is not None and page.locator(f"#{describedby}").first is not None,
-            "aria-describedby points to an existing element (hint)",
-            failures,
-        )
-        hint_id = describedby
-        hint_el = page.locator(f"#{hint_id}")
-        await expect(hint_el).to_be_visible()
-        hint_role = await hint_el.get_attribute("role")
-        check(hint_role != "alert", "hint element has no alert role", failures)
-
-        # -- Blur while empty: touched but empty -> should stay valid (no error) --
-        print("Blur while empty (not submitted)")
-        await field.scroll_into_view_if_needed()
-        await field.click()
-        await blur_field(page)
-        aria_invalid = await field.get_attribute("aria-invalid")
-        check(aria_invalid == "false", "empty blur before submit does not flag invalid", failures)
-
-        # -- Type invalid characters and blur --
-        print("Blur with invalid characters")
-        await clear_and_type(page, field, "!!")
-        await blur_field(page)
-        aria_invalid = await field.get_attribute("aria-invalid")
-        describedby = await field.get_attribute("aria-describedby")
-        check(aria_invalid == "true", 'aria-invalid="true" after invalid blur', failures)
-        check(describedby != hint_id, "aria-describedby now points to the error id", failures)
-        err = page.locator(f"#{describedby}")
-        await expect(err).to_be_visible()
-        check(await err.get_attribute("role") == "alert", 'error text has role="alert"', failures)
-        check(
-            await err.get_attribute("aria-live") == "polite",
-            'error text has aria-live="polite"',
-            failures,
-        )
-        err_text = (await err.inner_text()).strip()
-        check(len(err_text) > 0, "error text is non-empty", failures)
-
-        # -- Correcting the input updates aria-describedby back to hint --
-        print("Correcting input clears invalid state")
-        await clear_and_type(page, field, "Ado LGA, Ekiti State")
-        await page.keyboard.press("Escape")
-        await page.wait_for_timeout(200)
-        aria_invalid = await field.get_attribute("aria-invalid")
-        describedby_after = await field.get_attribute("aria-describedby")
-        check(aria_invalid == "false", "aria-invalid returns to false after correction", failures)
-        check(
-            describedby_after == hint_id,
-            "aria-describedby returns to the hint id after correction",
-            failures,
-        )
-
-        # -- Submit with invalid content: summary appears, receives focus --
-        print("Submit invalid form")
-        # Reload so `touched` resets and the submit button is enabled again.
-        await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
-        await page.wait_for_selector(FIELD, timeout=10000)
-        field = page.locator(FIELD)
-        # Type invalid content but DO NOT blur, so `touched` stays false and the
-        # submit button remains enabled (button is disabled by touched && !ok).
-        await clear_and_type(page, field, "!!")
-        await page.keyboard.press("Escape")
-        submit = page.get_by_role("button", name="Analyze")
-        # Submit via Enter on the field to avoid clicking the (now disabled) button.
-        await field.focus()
-        await page.evaluate("document.querySelector('form').requestSubmit()")
-        await page.wait_for_timeout(400)
-
-        summary = page.locator('[role="alert"][aria-live="assertive"]').first
-        await expect(summary).to_be_visible()
-        check(await summary.get_attribute("tabindex") == "-1", "summary is focusable (tabindex=-1)", failures)
-
-        focused_id = await page.evaluate("document.activeElement?.id || ''")
-        summary_id = await summary.get_attribute("id")
-        check(
-            focused_id == summary_id,
-            f"focus moved to summary on submit (focused={focused_id!r}, summary={summary_id!r})",
-            failures,
-        )
-
-        aria_invalid = await field.get_attribute("aria-invalid")
-        describedby = await field.get_attribute("aria-describedby")
-        check(aria_invalid == "true", "aria-invalid=true after invalid submit", failures)
-        check(describedby != hint_id, "aria-describedby -> error id after submit", failures)
-
-        # Summary "field: message" activator focuses the field.
-        activator = summary.get_by_role("button").first
-        await activator.click()
-        await page.wait_for_timeout(200)
-        field_id = await field.get_attribute("id")
-        focused_id = await page.evaluate("document.activeElement?.id || ''")
-        check(focused_id == field_id, "summary activator moves focus to the field", failures)
-
-        await page.screenshot(path=str(SHOTS / "invalid_submit.png"))
-
+        for label, viewport, is_mobile in VIEWPORTS:
+            print(f"\n=== Viewport: {label} ({viewport['width']}x{viewport['height']}) ===")
+            ctx = await browser.new_context(
+                viewport=viewport,
+                is_mobile=is_mobile,
+                has_touch=is_mobile,
+                device_scale_factor=2 if is_mobile else 1,
+            )
+            page = await ctx.new_page()
+            try:
+                await run_suite(page, label, failures)
+            finally:
+                await ctx.close()
         await browser.close()
 
     print()
@@ -175,9 +179,10 @@ async def main() -> int:
         for f in failures:
             print(f"  - {f}")
         return 1
-    print("All a11y regression checks passed.")
+    print("All a11y regression checks passed across all viewports.")
     return 0
 
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main()))
+
