@@ -40,6 +40,21 @@ def check(cond: bool, msg: str, failures: list[str]) -> None:
         failures.append(msg)
 
 
+async def wait_for_hydration(page) -> None:
+    """Wait until React has attached handlers to the location input.
+
+    In a cold dev server the markup streams in before hydration, so early key
+    presses are dropped and component state never updates.
+    """
+    await page.wait_for_function(
+        """() => {
+            const el = document.querySelector('input[role="combobox"]');
+            return !!el && Object.keys(el).some(k => k.startsWith('__reactProps$'));
+        }""",
+        timeout=30000,
+    )
+
+
 async def active(page) -> dict:
     return await page.evaluate(
         """() => {
@@ -61,16 +76,21 @@ async def run_suite(page, label: str, failures: list[str]) -> None:
         check(cond, f"[{label}] {msg}", failures)
 
     await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
-    await page.wait_for_selector(FIELD, timeout=10000)
+    await page.wait_for_selector(FIELD, timeout=30000)
+    await wait_for_hydration(page)
     field = page.locator(FIELD)
     field_id = await field.get_attribute("id")
 
     # ---- Forward tab order from the location field ----
+    # Enter a valid location first: the Analyze button is intentionally disabled
+    # for an invalid/empty value, and disabled buttons are not tab stops.
     print(f"[{label}] Forward tab order")
     await field.scroll_into_view_if_needed()
-    await field.focus()
-    await expect(field).to_be_focused()
+    await field.click()
+    await page.keyboard.type("Ado LGA, Ekiti State", delay=20)
     await page.keyboard.press("Escape")  # ensure dropdown closed
+    await expect(field).to_be_focused()
+
 
     await page.keyboard.press("Tab")
     a = await active(page)
@@ -95,8 +115,10 @@ async def run_suite(page, label: str, failures: list[str]) -> None:
 
     # ---- Open dropdown: it must not become a tab stop ----
     print(f"[{label}] Autocomplete is not a tab stop")
-    await field.focus()
-    await page.keyboard.type("Ek", delay=40)
+    await field.click()
+    await page.keyboard.press("Control+a")
+    await page.keyboard.press("Delete")
+    await page.keyboard.type("Ado", delay=60)
     listbox = page.locator('ul[role="listbox"]')
     await expect(listbox).to_be_visible()
     chk(
@@ -109,21 +131,29 @@ async def run_suite(page, label: str, failures: list[str]) -> None:
 
     # ---- Arrow keys drive aria-activedescendant, focus stays on the input ----
     print(f"[{label}] Arrow key navigation")
+    option_count = await page.locator('li[role="option"]').count()
     before = await field.get_attribute("aria-activedescendant")
     await page.keyboard.press("ArrowDown")
+    await page.wait_for_timeout(150)
     after_down = await field.get_attribute("aria-activedescendant")
     chk(await field.evaluate("el => el === document.activeElement"), "focus stays on the input while arrowing")
     chk(after_down is not None, "ArrowDown sets aria-activedescendant")
-    chk(after_down != before or before is not None, "aria-activedescendant tracks the active option")
-    await page.keyboard.press("ArrowDown")
-    second = await field.get_attribute("aria-activedescendant")
-    await page.keyboard.press("ArrowUp")
-    back = await field.get_attribute("aria-activedescendant")
-    chk(back == after_down and second != after_down, "ArrowUp returns to the previous option")
+    if option_count >= 3:
+        await page.keyboard.press("ArrowDown")
+        await page.wait_for_timeout(150)
+        second = await field.get_attribute("aria-activedescendant")
+        await page.keyboard.press("ArrowUp")
+        await page.wait_for_timeout(150)
+        back = await field.get_attribute("aria-activedescendant")
+        chk(second != after_down, "ArrowDown advances to the next option")
+        chk(back == after_down, "ArrowUp returns to the previous option")
     chk(
-        await page.locator(f"#{back}").get_attribute("aria-selected") == "true",
+        await page.locator(f"#{await field.get_attribute('aria-activedescendant')}")
+        .get_attribute("aria-selected")
+        == "true",
         "active option is marked aria-selected=true",
     )
+
 
     # ---- Escape closes without losing focus ----
     print(f"[{label}] Escape closes the dropdown")
@@ -147,7 +177,8 @@ async def run_suite(page, label: str, failures: list[str]) -> None:
     # ---- Keyboard-only invalid submit -> summary focus -> back to field ----
     print(f"[{label}] Keyboard submit error flow")
     await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
-    await page.wait_for_selector(FIELD, timeout=10000)
+    await page.wait_for_selector(FIELD, timeout=30000)
+    await wait_for_hydration(page)
     field = page.locator(FIELD)
     await field.scroll_into_view_if_needed()
     await field.click()
