@@ -55,6 +55,9 @@ jobs:
       - name: Run keyboard-only navigation tests
         run: python3 tests/a11y/keyboard_nav.spec.py
 
+      - name: Run contrast, landmark and heading tests
+        run: python3 tests/a11y/contrast_landmarks.spec.py
+
 
       - name: Upload screenshots on failure
         if: failure()
