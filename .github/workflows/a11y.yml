@@ -52,6 +52,10 @@ jobs:
       - name: Run a11y regression tests
         run: python3 tests/a11y/interactive_demo.spec.py
 
+      - name: Run keyboard-only navigation tests
+        run: python3 tests/a11y/keyboard_nav.spec.py
+
+
       - name: Upload screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
