@@ -52,6 +52,21 @@ async def blur_field(page) -> None:
 
 
 
+async def wait_for_hydration(page) -> None:
+    """Wait until React has attached handlers to the location input.
+
+    In a cold dev server the markup streams in before hydration, so early key
+    presses are dropped and component state never updates.
+    """
+    await page.wait_for_function(
+        """() => {
+            const el = document.querySelector('input[role="combobox"]');
+            return !!el && Object.keys(el).some(k => k.startsWith('__reactProps$'));
+        }""",
+        timeout=30000,
+    )
+
+
 def check(cond: bool, msg: str, failures: list[str]) -> None:
     marker = "✓" if cond else "✗"
     print(f"  {marker} {msg}")
@@ -71,7 +86,8 @@ async def run_suite(page, label: str, failures: list[str]) -> None:
         check(cond, f"[{label}] {msg}", failures)
 
     await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
-    await page.wait_for_selector(FIELD, timeout=10000)
+    await page.wait_for_selector(FIELD, timeout=30000)
+    await wait_for_hydration(page)
     field = page.locator(FIELD)
 
     # -- Initial state: valid, describedby -> hint --
@@ -123,7 +139,8 @@ async def run_suite(page, label: str, failures: list[str]) -> None:
     # -- Submit with invalid content: summary appears, receives focus --
     print(f"[{label}] Submit invalid form")
     await page.goto(f"{BASE}/#demo", wait_until="domcontentloaded")
-    await page.wait_for_selector(FIELD, timeout=10000)
+    await page.wait_for_selector(FIELD, timeout=30000)
+    await wait_for_hydration(page)
     field = page.locator(FIELD)
     await clear_and_type(page, field, "!!")
     await page.keyboard.press("Escape")
