@@ -57,18 +57,24 @@ const record = (node) => {
   if (last && last.text === entry.text && last.role === entry.role) return;
   window.__liveAnnouncements.push(entry);
 };
-new MutationObserver((records) => {
-  for (const r of records) {
-    if (r.type === 'characterData') record(r.target);
-    r.addedNodes.forEach(record);
-    if (r.type === 'attributes') record(r.target);
-  }
-}).observe(document.documentElement, {
-  subtree: true,
-  childList: true,
-  characterData: true,
-  attributes: true,
-  attributeFilter: ['aria-live', 'role'],
+const start = () => {
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === 'characterData') record(r.target);
+      r.addedNodes.forEach(record);
+      if (r.type === 'attributes') record(r.target);
+    }
+  }).observe(document.documentElement, {
+    subtree: true,
+    childList: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ['aria-live', 'role'],
+  });
+};
+if (document.documentElement) start();
+else document.addEventListener('readystatechange', function once() {
+  if (document.documentElement) { document.removeEventListener('readystatechange', once); start(); }
 });
 """
 
