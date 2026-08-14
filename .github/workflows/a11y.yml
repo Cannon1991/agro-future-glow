@@ -58,6 +58,9 @@ jobs:
       - name: Run contrast, landmark and heading tests
         run: python3 tests/a11y/contrast_landmarks.spec.py
 
+      - name: Run reduced-motion tests
+        run: python3 tests/a11y/reduced_motion.spec.py
+
 
       - name: Upload screenshots on failure
         if: failure()
