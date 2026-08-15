@@ -77,9 +77,11 @@ function Nav() {
   ];
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Logo />
-        <div className="hidden items-center gap-8 md:flex">
+      <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="min-w-0 shrink">
+          <Logo />
+        </div>
+        <div className="hidden min-w-0 items-center gap-8 md:flex">
           {links.map((l) => (
             <a
               key={l.href}
@@ -92,10 +94,12 @@ function Nav() {
         </div>
         <a
           href="#contact"
-          className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-soft)] transition-transform hover:scale-105"
+          className="inline-flex min-w-0 shrink items-center justify-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-soft)] transition-transform hover:scale-105"
         >
-          Get Started <ArrowRight className="h-4 w-4" />
+          <span className="truncate">Get Started</span>
+          <ArrowRight className="h-4 w-4 shrink-0" />
         </a>
+
       </nav>
     </header>
   );
@@ -384,14 +388,14 @@ function Impact() {
     <section id="impact" className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-14 lg:grid-cols-2">
-          <div className="relative">
+          <div className="relative min-w-0">
             <img
               src={communityImg}
               alt="Nigerian farmers reviewing crop data with an agronomist"
               loading="lazy"
               width={1536}
               height={1024}
-              className="rounded-3xl object-cover shadow-[var(--shadow-elevated)]"
+              className="w-full rounded-3xl object-cover shadow-[var(--shadow-elevated)]"
             />
             <img
               src={farmerAppImg}
@@ -402,7 +406,7 @@ function Impact() {
               className="absolute -bottom-10 -right-6 hidden w-2/3 rounded-2xl border-4 border-background object-cover shadow-[var(--shadow-elevated)] md:block"
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <span className="text-sm font-semibold uppercase tracking-widest text-primary">Impact</span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Better outcomes for farmers, villages, states and nations.
@@ -422,15 +426,16 @@ function Impact() {
               ].map((t) => (
                 <li key={t} className="flex gap-3">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                  <span className="text-foreground">{t}</span>
+                  <span className="min-w-0 break-words text-foreground">{t}</span>
                 </li>
               ))}
             </ul>
             <a
               href="#contact"
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-105"
+              className="mt-10 inline-flex max-w-full items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-6 py-3.5 text-center text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-105"
             >
-              Partner with AgroPulse Fix <ArrowRight className="h-5 w-5" />
+              <span className="min-w-0 break-words">Partner with AgroPulse Fix</span>
+              <ArrowRight className="h-5 w-5 shrink-0" />
             </a>
           </div>
         </div>
