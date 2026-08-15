@@ -88,7 +88,11 @@ COLLECT_OVERLAP = """
   const nodes = [...document.body.querySelectorAll(sel)].filter((el) => {
     const cs = getComputedStyle(el);
     if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') return false;
-    if (cs.position === 'absolute' || cs.position === 'fixed' || cs.position === 'sticky') return false;
+    for (let n = el; n && n !== document.body; n = n.parentElement) {
+      const ncs = getComputedStyle(n);
+      // overlay captions / decorative layers are positioned on purpose
+      if (['absolute', 'fixed', 'sticky'].includes(ncs.position)) return false;
+    }
     const r = el.getBoundingClientRect();
     return r.width > 4 && r.height > 4 && (el.textContent || '').trim().length > 0;
   });
