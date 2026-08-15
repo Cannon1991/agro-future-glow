@@ -432,9 +432,10 @@ function Impact() {
             </ul>
             <a
               href="#contact"
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-105"
+              className="mt-10 inline-flex max-w-full items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-6 py-3.5 text-center text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-105"
             >
-              Partner with AgroPulse Fix <ArrowRight className="h-5 w-5" />
+              <span className="min-w-0 break-words">Partner with AgroPulse Fix</span>
+              <ArrowRight className="h-5 w-5 shrink-0" />
             </a>
           </div>
         </div>
