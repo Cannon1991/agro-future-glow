@@ -388,14 +388,14 @@ function Impact() {
     <section id="impact" className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-14 lg:grid-cols-2">
-          <div className="relative">
+          <div className="relative min-w-0">
             <img
               src={communityImg}
               alt="Nigerian farmers reviewing crop data with an agronomist"
               loading="lazy"
               width={1536}
               height={1024}
-              className="rounded-3xl object-cover shadow-[var(--shadow-elevated)]"
+              className="w-full rounded-3xl object-cover shadow-[var(--shadow-elevated)]"
             />
             <img
               src={farmerAppImg}
@@ -406,7 +406,7 @@ function Impact() {
               className="absolute -bottom-10 -right-6 hidden w-2/3 rounded-2xl border-4 border-background object-cover shadow-[var(--shadow-elevated)] md:block"
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <span className="text-sm font-semibold uppercase tracking-widest text-primary">Impact</span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Better outcomes for farmers, villages, states and nations.
@@ -426,7 +426,7 @@ function Impact() {
               ].map((t) => (
                 <li key={t} className="flex gap-3">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                  <span className="text-foreground">{t}</span>
+                  <span className="min-w-0 break-words text-foreground">{t}</span>
                 </li>
               ))}
             </ul>
