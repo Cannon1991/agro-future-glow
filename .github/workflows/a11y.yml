@@ -61,6 +61,10 @@ jobs:
       - name: Run reduced-motion tests
         run: python3 tests/a11y/reduced_motion.spec.py
 
+      - name: Run ARIA live region tests
+        run: python3 tests/a11y/live_regions.spec.py
+
+
 
       - name: Upload screenshots on failure
         if: failure()
