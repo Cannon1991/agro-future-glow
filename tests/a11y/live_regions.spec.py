@@ -42,9 +42,7 @@ VIEWPORTS = [
 OBSERVER = """
 window.__liveAnnouncements = [];
 const LIVE = '[aria-live], [role="alert"], [role="status"], [role="log"]';
-const record = (node) => {
-  const host = node.nodeType === 1 ? node : node.parentElement;
-  const region = host && host.closest ? host.closest(LIVE) : null;
+const push = (region) => {
   if (!region) return;
   const text = (region.textContent || '').trim();
   if (!text) return;
@@ -56,6 +54,14 @@ const record = (node) => {
   };
   if (last && last.text === entry.text && last.role === entry.role) return;
   window.__liveAnnouncements.push(entry);
+};
+const record = (node) => {
+  const host = node.nodeType === 1 ? node : node.parentElement;
+  if (!host) return;
+  // The mutated node may be inside a live region, or be a wrapper that
+  // contains one (React commonly inserts the wrapper in a single mutation).
+  push(host.closest ? host.closest(LIVE) : null);
+  if (host.querySelectorAll) host.querySelectorAll(LIVE).forEach(push);
 };
 const start = () => {
   new MutationObserver((records) => {
