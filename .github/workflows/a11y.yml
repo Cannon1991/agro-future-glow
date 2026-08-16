@@ -64,6 +64,9 @@ jobs:
       - name: Run ARIA live region tests
         run: python3 tests/a11y/live_regions.spec.py
 
+      - name: Run reflow / 200% text zoom tests
+        run: python3 tests/a11y/reflow_zoom.spec.py
+
 
 
       - name: Upload screenshots on failure
