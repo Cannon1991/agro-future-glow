@@ -172,6 +172,7 @@ async def run_case(browser, name: str, viewport: dict) -> None:
         f"only reached {len(reached)} of {len(expected)}",
     )
 
+    print("  order:", [o["label"][:18] for o in order])
     missed = [e for e in expected if e["id"] not in set(reached)]
     check(
         f"[{name}] every interactive element is reachable by Tab",
