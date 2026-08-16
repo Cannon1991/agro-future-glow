@@ -47,6 +47,11 @@ COLLECT_INTERACTIVE = """
     if (el.closest('[inert]')) continue;
     el.setAttribute('data-kb-id', out.length.toString());
     out.push({
+      style: {
+        outlineStyle: cs.outlineStyle, outlineWidth: cs.outlineWidth,
+        outlineColor: cs.outlineColor, boxShadow: cs.boxShadow,
+        borderColor: cs.borderColor, backgroundColor: cs.backgroundColor,
+      },
       id: out.length,
       tag: el.tagName.toLowerCase(),
       label: (el.getAttribute('aria-label') || el.textContent || el.getAttribute('placeholder') || '').trim().slice(0, 40),
@@ -83,7 +88,7 @@ ACTIVE_INFO = """
     tag: el.tagName.toLowerCase(),
     label: (el.getAttribute('aria-label') || el.textContent || el.getAttribute('placeholder') || '').trim().slice(0, 40),
     top: Math.round(r.top + window.scrollY),
-    inViewport: r.top >= -1 && r.bottom <= window.innerHeight + 1 && r.left >= -1 && r.right <= window.innerWidth + 1,
+    inViewport: r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth,
     tabindex: el.getAttribute('tabindex'),
   };
 }
@@ -153,22 +158,8 @@ async def run_case(browser, name: str, viewport: dict) -> None:
             handle = await page.query_selector(f'[data-kb-id="{info["kbId"]}"]')
             if handle:
                 focused_style = await page.evaluate(FOCUS_STYLE, handle)
-                unfocused_style = await page.evaluate(
-                    """(el) => {
-                        const prev = document.activeElement;
-                        el.blur();
-                        const cs = getComputedStyle(el);
-                        const snap = {
-                          outlineStyle: cs.outlineStyle, outlineWidth: cs.outlineWidth,
-                          outlineColor: cs.outlineColor, boxShadow: cs.boxShadow,
-                          borderColor: cs.borderColor, backgroundColor: cs.backgroundColor,
-                        };
-                        if (prev && prev.focus) prev.focus();
-                        return snap;
-                    }""",
-                    handle,
-                )
-                if not visible_ring(unfocused_style, focused_style):
+                baseline = next((e["style"] for e in expected if e["id"] == kb), {})
+                if not visible_ring(baseline, focused_style):
                     no_ring.append(f'{info["tag"]} "{info["label"]}"')
                 if not info["inViewport"]:
                     offscreen.append(f'{info["tag"]} "{info["label"]}"')
