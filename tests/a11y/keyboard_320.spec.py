@@ -150,15 +150,24 @@ async def run_case(browser, name: str, viewport: dict) -> None:
             break  # wrapped around the ring / returned to the browser UI
         seen_signatures.add(sig)
 
-        if info["kbId"] is not None:
-            kb = int(info["kbId"])
+        match = next(
+            (e for e in expected if e["tag"] == info["tag"] and e["label"] == info["label"]
+             and abs(e["top"] - info["top"]) <= 40 and e["id"] not in reached),
+            None,
+        )
+        if match is not None:
+            kb = match["id"]
             reached.append(kb)
             order.append(info)
 
-            handle = await page.query_selector(f'[data-kb-id="{info["kbId"]}"]')
-            if handle:
-                focused_style = await page.evaluate(FOCUS_STYLE, handle)
-                baseline = next((e["style"] for e in expected if e["id"] == kb), {})
+            focused_style = await page.evaluate(
+                "() => { const el = document.activeElement; const cs = getComputedStyle(el);"
+                " return { outlineStyle: cs.outlineStyle, outlineWidth: cs.outlineWidth,"
+                " outlineColor: cs.outlineColor, boxShadow: cs.boxShadow,"
+                " borderColor: cs.borderColor, backgroundColor: cs.backgroundColor }; }"
+            )
+            if True:
+                baseline = match["style"]
                 if not visible_ring(baseline, focused_style):
                     no_ring.append(f'{info["tag"]} "{info["label"]}"')
                 if not info["inViewport"]:
