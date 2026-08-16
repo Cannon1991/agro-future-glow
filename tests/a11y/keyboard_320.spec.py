@@ -63,21 +63,6 @@ COLLECT_INTERACTIVE = """
 }
 """
 
-# Snapshot of the styles that can express a focus ring.
-FOCUS_STYLE = """
-(el) => {
-  const cs = getComputedStyle(el);
-  return {
-    outlineStyle: cs.outlineStyle,
-    outlineWidth: cs.outlineWidth,
-    outlineColor: cs.outlineColor,
-    boxShadow: cs.boxShadow,
-    borderColor: cs.borderColor,
-    backgroundColor: cs.backgroundColor,
-  };
-}
-"""
-
 ACTIVE_INFO = """
 () => {
   const el = document.activeElement;
@@ -166,12 +151,11 @@ async def run_case(browser, name: str, viewport: dict) -> None:
                 " outlineColor: cs.outlineColor, boxShadow: cs.boxShadow,"
                 " borderColor: cs.borderColor, backgroundColor: cs.backgroundColor }; }"
             )
-            if True:
-                baseline = match["style"]
-                if not visible_ring(baseline, focused_style):
-                    no_ring.append(f'{info["tag"]} "{info["label"]}"')
-                if not info["inViewport"]:
-                    offscreen.append(f'{info["tag"]} "{info["label"]}"')
+            baseline = match["style"]
+            if not visible_ring(baseline, focused_style):
+                no_ring.append(f'{info["tag"]} "{info["label"]}"')
+            if not info["inViewport"]:
+                offscreen.append(f'{info["tag"]} "{info["label"]}"')
 
         await page.keyboard.press("Tab")
 
