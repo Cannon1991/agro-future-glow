@@ -644,7 +644,7 @@ export function InteractiveDemo() {
             </div>
             <button
               type="submit"
-              disabled={mutation.isPending || (touched && !validation.ok)}
+              disabled={mutation.isPending}
               className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-primary)] px-7 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {mutation.isPending ? (
