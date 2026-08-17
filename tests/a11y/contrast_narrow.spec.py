@@ -73,11 +73,16 @@ MEASURE_CONTROLS = """
     return { rgb: [r, g, b], a: a === undefined ? 1 : a };
   };
   const over = (fg, bg) => fg.rgb.map((c, i) => c * fg.a + bg[i] * (1 - fg.a));
+  // Returns null when the effective background can't be measured reliably
+  // (gradients, background images, video/canvas underlays) - axe covers those.
   const bgOf = (el) => {
     let stack = [];
+    let opaque = false;
     for (let n = el; n; n = n.parentElement) {
-      const p = parse(getComputedStyle(n).backgroundColor);
-      if (p && p.a > 0) { stack.push(p); if (p.a === 1) break; }
+      const cs = getComputedStyle(n);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none') return null;
+      const p = parse(cs.backgroundColor);
+      if (p && p.a > 0) { stack.push(p); if (p.a === 1) { opaque = true; break; } }
     }
     let base = [255, 255, 255];
     for (let i = stack.length - 1; i >= 0; i--) base = over(stack[i], base);
@@ -102,9 +107,12 @@ MEASURE_CONTROLS = """
     if (!own && el.tagName !== 'INPUT') continue;
     if (!text && el.tagName !== 'INPUT') continue;
 
-    const fgp = parse(cs.color);
-    if (!fgp) continue;
+    // gradient/clipped text has no measurable foreground colour
+    const fill = cs.webkitTextFillColor || cs.color;
+    const fgp = parse(fill);
+    if (!fgp || fgp.a === 0) continue;
     const bg = bgOf(el);
+    if (!bg) continue;
     const fg = over(fgp, bg);
     const size = parseFloat(cs.fontSize);
     const weight = parseInt(cs.fontWeight, 10) || 400;
@@ -160,6 +168,14 @@ async def run_state(page, name: str, state: str) -> None:
     await manual_scan(page, name, state)
 
 
+async def click_submit(page, submit) -> None:
+    try:
+        await submit.scroll_into_view_if_needed(timeout=5000)
+        await submit.click(timeout=5000)
+    except Exception:
+        await submit.evaluate("el => el.click()")
+
+
 async def run_case(browser, name: str, viewport: dict) -> None:
     print(f"\n=== {name} ({viewport['width']}x{viewport['height']}) ===")
     ctx = await browser.new_context(viewport=viewport)
@@ -211,7 +227,7 @@ async def run_case(browser, name: str, viewport: dict) -> None:
     await combo.fill("")
     submit = page.locator('form button[type="submit"]').first
     if await submit.count():
-        await submit.click()
+        await click_submit(page, submit)
         await page.wait_for_timeout(500)
         await run_state(page, name, "error summary")
 
@@ -219,7 +235,7 @@ async def run_case(browser, name: str, viewport: dict) -> None:
     await page.route("**/_serverFn/**", lambda route: asyncio.create_task(_slow(route)))
     await combo.fill("Ado, Ado-Ekiti, Ekiti")
     if await submit.count():
-        await submit.click()
+        await click_submit(page, submit)
         await page.wait_for_timeout(700)
         await run_state(page, name, "loading / disabled")
     await page.unroute("**/_serverFn/**")
