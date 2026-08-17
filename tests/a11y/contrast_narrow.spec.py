@@ -81,9 +81,20 @@ MEASURE_CONTROLS = """
     for (let n = el; n; n = n.parentElement) {
       const cs = getComputedStyle(n);
       if (cs.backgroundImage && cs.backgroundImage !== 'none') return null;
+      // an overlapping decorative layer (image / gradient / media) makes the
+      // effective backdrop unmeasurable from CSS alone
+      for (const child of n.children) {
+        if (child === el || child.contains(el)) continue;
+        const ccs = getComputedStyle(child);
+        if (!['absolute', 'fixed'].includes(ccs.position)) continue;
+        if (ccs.display === 'none' || ccs.visibility === 'hidden') continue;
+        if (ccs.backgroundImage !== 'none' || ['IMG', 'VIDEO', 'CANVAS', 'SVG'].includes(child.tagName)
+            || child.querySelector('img, video, canvas, svg')) return null;
+      }
       const p = parse(cs.backgroundColor);
       if (p && p.a > 0) { stack.push(p); if (p.a === 1) { opaque = true; break; } }
     }
+    if (!opaque) return null;
     let base = [255, 255, 255];
     for (let i = stack.length - 1; i >= 0; i--) base = over(stack[i], base);
     return base;
