@@ -61,6 +61,9 @@ jobs:
       - name: Run contrast, landmark and heading tests
         run: python3 tests/a11y/contrast_landmarks.spec.py
 
+      - name: Run narrow-width (320px / 375px) color contrast tests
+        run: python3 tests/a11y/contrast_narrow.spec.py
+
       - name: Run reduced-motion tests
         run: python3 tests/a11y/reduced_motion.spec.py
 
