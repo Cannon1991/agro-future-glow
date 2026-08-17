@@ -66,11 +66,28 @@ MEASURE_CONTROLS = """
 () => {
   const srgb = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
   const lum = ([r, g, b]) => 0.2126 * srgb(r) + 0.7152 * srgb(g) + 0.0722 * srgb(b);
+  // Resolve ANY css colour syntax (rgb/oklch/color-mix/...) to rgba via canvas.
+  const _cv = document.createElement('canvas');
+  _cv.width = _cv.height = 1;
+  const _ctx = _cv.getContext('2d', { willReadFrequently: true });
+  const _cache = new Map();
   const parse = (s) => {
-    const m = (s || '').match(/-?[\\d.]+/g);
-    if (!m) return null;
-    const [r, g, b, a] = m.map(Number);
-    return { rgb: [r, g, b], a: a === undefined ? 1 : a };
+    if (!s) return null;
+    if (_cache.has(s)) return _cache.get(s);
+    let out = null;
+    try {
+      _ctx.clearRect(0, 0, 1, 1);
+      _ctx.fillStyle = '#000';
+      _ctx.fillStyle = s;
+      _ctx.fillRect(0, 0, 1, 1);
+      const d = _ctx.getImageData(0, 0, 1, 1).data;
+      const a = d[3] / 255;
+      out = a === 0
+        ? { rgb: [0, 0, 0], a: 0 }
+        : { rgb: [d[0] / a, d[1] / a, d[2] / a].map(v => Math.min(255, Math.max(0, v))), a };
+    } catch (e) { out = null; }
+    _cache.set(s, out);
+    return out;
   };
   const over = (fg, bg) => fg.rgb.map((c, i) => c * fg.a + bg[i] * (1 - fg.a));
   // Returns null when the effective background can't be measured reliably
