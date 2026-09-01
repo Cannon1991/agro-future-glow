@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as A11yRouteImport } from './routes/a11y'
 import { Route as IndexRouteImport } from './routes/index'
 
+const A11yRoute = A11yRouteImport.update({
+  id: '/a11y',
+  path: '/a11y',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a11y': typeof A11yRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a11y': typeof A11yRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a11y': typeof A11yRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/a11y'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/a11y'
+  id: '__root__' | '/' | '/a11y'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  A11yRoute: typeof A11yRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/a11y': {
+      id: '/a11y'
+      path: '/a11y'
+      fullPath: '/a11y'
+      preLoaderRoute: typeof A11yRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  A11yRoute: A11yRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,2711 @@
+{
+  "generatedAt": "2026-09-01T10:43:29.218732+00:00",
+  "suites": [
+    {
+      "id": "interactive_demo",
+      "title": "ARIA describedby / invalid / focus",
+      "file": "tests/a11y/interactive_demo.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-invalid=\"false\" before interaction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-describedby points to an existing element (hint)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "hint element has no alert role",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "empty blur before submit does not flag invalid",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-invalid=\"true\" after invalid blur",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-describedby now points to the error id",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "error text has role=\"alert\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "error text has aria-live=\"polite\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "error text is non-empty",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-invalid returns to false after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-describedby returns to the hint id after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "summary is focusable (tabindex=-1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "focus moved to summary on submit (focused='demo-form-errors', summary='demo-form-errors')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-invalid=true after invalid submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-describedby -> error id after submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "summary activator moves focus to the field",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-invalid=\"false\" before interaction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-describedby points to an existing element (hint)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "hint element has no alert role",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "empty blur before submit does not flag invalid",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-invalid=\"true\" after invalid blur",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-describedby now points to the error id",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "error text has role=\"alert\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "error text has aria-live=\"polite\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "error text is non-empty",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-invalid returns to false after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-describedby returns to the hint id after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "summary is focusable (tabindex=-1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "focus moved to summary on submit (focused='demo-form-errors', summary='demo-form-errors')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-invalid=true after invalid submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-describedby -> error id after submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "summary activator moves focus to the field",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-invalid=\"false\" before interaction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-describedby points to an existing element (hint)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "hint element has no alert role",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "empty blur before submit does not flag invalid",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-invalid=\"true\" after invalid blur",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-describedby now points to the error id",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "error text has role=\"alert\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "error text has aria-live=\"polite\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "error text is non-empty",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-invalid returns to false after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-describedby returns to the hint id after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "summary is focusable (tabindex=-1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "focus moved to summary on submit (focused='demo-form-errors', summary='demo-form-errors')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-invalid=true after invalid submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-describedby -> error id after submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "summary activator moves focus to the field",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "keyboard_nav",
+      "title": "Keyboard focus order",
+      "file": "tests/a11y/keyboard_nav.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "Tab from input reaches the submit button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'submit', 'label': 'Analyze'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "Tab from submit reaches the first example button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'button', 'label': 'Ado LGA, Ekiti State'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "Shift+Tab returns to the submit button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'submit', 'label': 'Analyze'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "Shift+Tab returns to the location input (got {'tag': 'input', 'id': 'demo-location', 'role': 'combobox', 'type': '', 'label': 'Village, local government, state or country'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no focusable elements inside the listbox (no focus trap)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "focus stays on the input while arrowing",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "ArrowDown sets aria-activedescendant",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "active option is marked aria-selected=true",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "aria-expanded=\"false\" after Escape",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "focus remains on the input after Escape",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "Enter fills the input from the active option (got 'Ilokun, Ado Ekiti LGA, Ekiti State')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "focus stays on the input after selection",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "focus moves to the error summary (got {'tag': 'div', 'id': 'demo-form-errors', 'role': 'alert', 'type': '', 'label': 'Please fix the following error to contin'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "Tab from the summary reaches its activator button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'button', 'label': 'Location: Use letters, numbers, spaces, '})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "activating the summary link focuses the field (got {'tag': 'input', 'id': 'demo-location', 'role': 'combobox', 'type': '', 'label': 'Village, local government, state or country'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "Tab from input reaches the submit button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'submit', 'label': 'Analyze'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "Tab from submit reaches the first example button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'button', 'label': 'Ado LGA, Ekiti State'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "Shift+Tab returns to the submit button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'submit', 'label': 'Analyze'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "Shift+Tab returns to the location input (got {'tag': 'input', 'id': 'demo-location', 'role': 'combobox', 'type': '', 'label': 'Village, local government, state or country'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no focusable elements inside the listbox (no focus trap)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "focus stays on the input while arrowing",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "ArrowDown sets aria-activedescendant",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "active option is marked aria-selected=true",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "aria-expanded=\"false\" after Escape",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "focus remains on the input after Escape",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "Enter fills the input from the active option (got 'Ilokun, Ado Ekiti LGA, Ekiti State')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "focus stays on the input after selection",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "focus moves to the error summary (got {'tag': 'div', 'id': 'demo-form-errors', 'role': 'alert', 'type': '', 'label': 'Please fix the following error to contin'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "Tab from the summary reaches its activator button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'button', 'label': 'Location: Use letters, numbers, spaces, '})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "activating the summary link focuses the field (got {'tag': 'input', 'id': 'demo-location', 'role': 'combobox', 'type': '', 'label': 'Village, local government, state or country'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "Tab from input reaches the submit button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'submit', 'label': 'Analyze'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "Tab from submit reaches the first example button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'button', 'label': 'Ado LGA, Ekiti State'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "Shift+Tab returns to the submit button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'submit', 'label': 'Analyze'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "Shift+Tab returns to the location input (got {'tag': 'input', 'id': 'demo-location', 'role': 'combobox', 'type': '', 'label': 'Village, local government, state or country'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no focusable elements inside the listbox (no focus trap)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "focus stays on the input while arrowing",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "ArrowDown sets aria-activedescendant",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "active option is marked aria-selected=true",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "aria-expanded=\"false\" after Escape",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "focus remains on the input after Escape",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "Enter fills the input from the active option (got 'Ilokun, Ado Ekiti LGA, Ekiti State')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "focus stays on the input after selection",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "focus moves to the error summary (got {'tag': 'div', 'id': 'demo-form-errors', 'role': 'alert', 'type': '', 'label': 'Please fix the following error to contin'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "Tab from the summary reaches its activator button (got {'tag': 'button', 'id': '', 'role': '', 'type': 'button', 'label': 'Location: Use letters, numbers, spaces, '})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "activating the summary link focuses the field (got {'tag': 'input', 'id': 'demo-location', 'role': 'combobox', 'type': '', 'label': 'Village, local government, state or country'})",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "keyboard_320",
+      "title": "Keyboard reachability at 320px",
+      "file": "tests/a11y/keyboard_320.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "page exposes interactive controls",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "no positive tabindex",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "tabbing advances (no keyboard trap)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "every interactive element is reachable by Tab",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "focus order follows visual order",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "every focused element has a visible focus indicator",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "focused element is scrolled into view",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "page exposes interactive controls",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "no positive tabindex",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "tabbing advances (no keyboard trap)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "every interactive element is reachable by Tab",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "focus order follows visual order",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "every focused element has a visible focus indicator",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "focused element is scrolled into view",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "contrast_landmarks",
+      "title": "Contrast, landmarks & headings",
+      "file": "tests/a11y/contrast_landmarks.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no WCAG color-contrast violations (0 rule hit(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no landmark/heading violations (0 rule hit(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "exactly one main landmark (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "exactly one h1 (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "at least one navigation landmark (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "first heading on the page is the h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no empty headings",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no skipped heading levels (ok)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no WCAG color-contrast violations (0 rule hit(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no landmark/heading violations (0 rule hit(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "exactly one main landmark (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "exactly one h1 (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "at least one navigation landmark (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "first heading on the page is the h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no empty headings",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no skipped heading levels (ok)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no WCAG color-contrast violations (0 rule hit(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no landmark/heading violations (0 rule hit(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "exactly one main landmark (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "exactly one h1 (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "at least one navigation landmark (got 1)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "first heading on the page is the h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no empty headings",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no skipped heading levels (ok)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "contrast_narrow",
+      "title": "Narrow-width color contrast",
+      "file": "tests/a11y/contrast_narrow.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 default",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 default",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 keyboard focus",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 keyboard focus",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #0",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #2",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #3",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 hover",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 autocomplete open",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 autocomplete open",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 autocomplete active option",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 autocomplete active option",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 inline validation error",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 inline validation error",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 error summary",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 error summary",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 loading / disabled",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 loading / disabled",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 default",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 default",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 keyboard focus",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 keyboard focus",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #0",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #2",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover button #3",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 hover",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 hover",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 autocomplete open",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 autocomplete open",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 autocomplete active option",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 autocomplete active option",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 inline validation error",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 inline validation error",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 error summary",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 error summary",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe color-contrast AA \u2013 loading / disabled",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "measured text/button contrast >= AA \u2013 loading / disabled",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "landmarks_narrow",
+      "title": "Narrow-width landmarks & heading order",
+      "file": "tests/a11y/landmarks_narrow.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "exactly one banner/header",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "exactly one main",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "exactly one contentinfo/footer",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "at least one navigation landmark",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "header/main/footer are top-level",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "main contains the page sections",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "exactly one h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "first heading is the h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "no empty headings",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "no skipped heading levels",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w",
+          "width": 320,
+          "height": 640,
+          "zoom": 1.0,
+          "name": "axe landmark/heading rules",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "exactly one banner/header",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "exactly one main",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "exactly one contentinfo/footer",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "at least one navigation landmark",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "header/main/footer are top-level",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "main contains the page sections",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "exactly one h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "first heading is the h1",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "no empty headings",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "no skipped heading levels",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "375w",
+          "width": 375,
+          "height": 667,
+          "zoom": 1.0,
+          "name": "axe landmark/heading rules",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "reduced_motion",
+      "title": "prefers-reduced-motion",
+      "file": "tests/a11y/reduced_motion.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no running CSS animations (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no non-instant CSS transitions (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no smooth scroll-behavior (0)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "loading indicators still render under reduced motion (41 skeleton(s), 4 spinner(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "loading skeletons/spinners do not animate (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no running CSS animations (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no non-instant CSS transitions (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no smooth scroll-behavior (0)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "loading indicators still render under reduced motion (41 skeleton(s), 4 spinner(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "loading skeletons/spinners do not animate (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no running CSS animations (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no non-instant CSS transitions (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no smooth scroll-behavior (0)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "loading indicators still render under reduced motion (41 skeleton(s), 4 spinner(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "loading skeletons/spinners do not animate (0 element(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "control run detects motion (assertions above are meaningful)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "live_regions",
+      "title": "ARIA live announcements",
+      "file": "tests/a11y/live_regions.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "validation error region is role=\"alert\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "validation error region is aria-live=\"polite\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "validation error text was announced (captured 1 announcement(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "error region cleared after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "error summary announces non-empty text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "an assertive announcement was captured on submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "progress region announces progress (got 'Analyzing \u201cAdo LGA, Ekiti State\u201d \u2014 this usually takes 5\u201310 seconds.')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "progress region names the location being analyzed",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "progress region is not inside an aria-hidden subtree",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "pending state produced a live announcement",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "multiple distinct dynamic updates were announced (got 13)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "desktop",
+          "width": 1280,
+          "height": 1800,
+          "zoom": 1.0,
+          "name": "no live region is aria-hidden (found 0)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "validation error region is role=\"alert\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "validation error region is aria-live=\"polite\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "validation error text was announced (captured 1 announcement(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "error region cleared after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "error summary announces non-empty text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "an assertive announcement was captured on submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "progress region announces progress (got 'Analyzing \u201cAdo LGA, Ekiti State\u201d \u2014 this usually takes 5\u201310 seconds.')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "progress region names the location being analyzed",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "progress region is not inside an aria-hidden subtree",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "pending state produced a live announcement",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "multiple distinct dynamic updates were announced (got 13)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "tablet",
+          "width": 768,
+          "height": 1024,
+          "zoom": 1.0,
+          "name": "no live region is aria-hidden (found 0)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "validation error region is role=\"alert\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "validation error region is aria-live=\"polite\"",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "validation error text was announced (captured 1 announcement(s))",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "error region cleared after correction",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "error summary announces non-empty text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "an assertive announcement was captured on submit",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "progress region announces progress (got 'Analyzing \u201cAdo LGA, Ekiti State\u201d \u2014 this usually takes 5\u201310 seconds.')",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "progress region names the location being analyzed",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "progress region is not inside an aria-hidden subtree",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "pending state produced a live announcement",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "multiple distinct dynamic updates were announced (got 13)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "mobile",
+          "width": 390,
+          "height": 844,
+          "zoom": 1.0,
+          "name": "no live region is aria-hidden (found 0)",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    },
+    {
+      "id": "reflow_zoom",
+      "title": "Reflow at 200% text zoom",
+      "file": "tests/a11y/reflow_zoom.spec.py",
+      "status": "pass",
+      "ranAt": "2026-09-01T10:43:29.218732+00:00",
+      "error": null,
+      "checks": [
+        {
+          "viewport": "320w-100pct",
+          "width": 320,
+          "height": 800,
+          "zoom": 1.0,
+          "name": "no horizontal scroll",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-100pct",
+          "width": 320,
+          "height": 800,
+          "zoom": 1.0,
+          "name": "no element overflows horizontally",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-100pct",
+          "width": 320,
+          "height": 800,
+          "zoom": 1.0,
+          "name": "no clipped text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-100pct",
+          "width": 320,
+          "height": 800,
+          "zoom": 1.0,
+          "name": "no overlapping content",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-200pct-text",
+          "width": 320,
+          "height": 800,
+          "zoom": 2.0,
+          "name": "no horizontal scroll",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-200pct-text",
+          "width": 320,
+          "height": 800,
+          "zoom": 2.0,
+          "name": "no element overflows horizontally",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-200pct-text",
+          "width": 320,
+          "height": 800,
+          "zoom": 2.0,
+          "name": "no clipped text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "320w-200pct-text",
+          "width": 320,
+          "height": 800,
+          "zoom": 2.0,
+          "name": "no overlapping content",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "400w-200pct-text",
+          "width": 400,
+          "height": 900,
+          "zoom": 2.0,
+          "name": "no horizontal scroll",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "400w-200pct-text",
+          "width": 400,
+          "height": 900,
+          "zoom": 2.0,
+          "name": "no element overflows horizontally",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "400w-200pct-text",
+          "width": 400,
+          "height": 900,
+          "zoom": 2.0,
+          "name": "no clipped text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "400w-200pct-text",
+          "width": 400,
+          "height": 900,
+          "zoom": 2.0,
+          "name": "no overlapping content",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "1280w-200pct-text",
+          "width": 1280,
+          "height": 1024,
+          "zoom": 2.0,
+          "name": "no horizontal scroll",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "1280w-200pct-text",
+          "width": 1280,
+          "height": 1024,
+          "zoom": 2.0,
+          "name": "no element overflows horizontally",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "1280w-200pct-text",
+          "width": 1280,
+          "height": 1024,
+          "zoom": 2.0,
+          "name": "no clipped text",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        },
+        {
+          "viewport": "1280w-200pct-text",
+          "width": 1280,
+          "height": 1024,
+          "zoom": 2.0,
+          "name": "no overlapping content",
+          "detail": "",
+          "status": "pass",
+          "lastRunAt": "2026-09-01T10:43:29.218732+00:00"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "checks": 261,
+    "failing": 0,
+    "suites": 9,
+    "failingSuites": 0
+  }
+}
