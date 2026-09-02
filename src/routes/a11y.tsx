@@ -105,9 +105,12 @@ function A11yDashboard() {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6">
-      <nav aria-label="Breadcrumb" className="mb-6 text-sm">
+      <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap gap-4 text-sm">
         <Link to="/" className="text-muted-foreground underline-offset-4 hover:underline">
           ← Back to AgroPulse Fix
+        </Link>
+        <Link to="/a11y-fixes" className="text-muted-foreground underline-offset-4 hover:underline">
+          Fix list
         </Link>
       </nav>
 
