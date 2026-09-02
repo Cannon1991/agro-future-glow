@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as A11yFixesRouteImport } from './routes/a11y-fixes'
 import { Route as A11yRouteImport } from './routes/a11y'
 import { Route as IndexRouteImport } from './routes/index'
 
+const A11yFixesRoute = A11yFixesRouteImport.update({
+  id: '/a11y-fixes',
+  path: '/a11y-fixes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const A11yRoute = A11yRouteImport.update({
   id: '/a11y',
   path: '/a11y',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
+  '/a11y-fixes': typeof A11yFixesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
+  '/a11y-fixes': typeof A11yFixesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
+  '/a11y-fixes': typeof A11yFixesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a11y'
+  fullPaths: '/' | '/a11y' | '/a11y-fixes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a11y'
-  id: '__root__' | '/' | '/a11y'
+  to: '/' | '/a11y' | '/a11y-fixes'
+  id: '__root__' | '/' | '/a11y' | '/a11y-fixes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   A11yRoute: typeof A11yRoute
+  A11yFixesRoute: typeof A11yFixesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/a11y-fixes': {
+      id: '/a11y-fixes'
+      path: '/a11y-fixes'
+      fullPath: '/a11y-fixes'
+      preLoaderRoute: typeof A11yFixesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/a11y': {
       id: '/a11y'
       path: '/a11y'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   A11yRoute: A11yRoute,
+  A11yFixesRoute: A11yFixesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
