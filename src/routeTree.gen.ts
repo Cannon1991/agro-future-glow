@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MobileRouteImport } from './routes/mobile'
 import { Route as A11yFixesRouteImport } from './routes/a11y-fixes'
 import { Route as A11yRouteImport } from './routes/a11y'
 import { Route as IndexRouteImport } from './routes/index'
 
+const MobileRoute = MobileRouteImport.update({
+  id: '/mobile',
+  path: '/mobile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const A11yFixesRoute = A11yFixesRouteImport.update({
   id: '/a11y-fixes',
   path: '/a11y-fixes',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
   '/a11y-fixes': typeof A11yFixesRoute
+  '/mobile': typeof MobileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
   '/a11y-fixes': typeof A11yFixesRoute
+  '/mobile': typeof MobileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
   '/a11y-fixes': typeof A11yFixesRoute
+  '/mobile': typeof MobileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a11y' | '/a11y-fixes'
+  fullPaths: '/' | '/a11y' | '/a11y-fixes' | '/mobile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a11y' | '/a11y-fixes'
-  id: '__root__' | '/' | '/a11y' | '/a11y-fixes'
+  to: '/' | '/a11y' | '/a11y-fixes' | '/mobile'
+  id: '__root__' | '/' | '/a11y' | '/a11y-fixes' | '/mobile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   A11yRoute: typeof A11yRoute
   A11yFixesRoute: typeof A11yFixesRoute
+  MobileRoute: typeof MobileRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/mobile': {
+      id: '/mobile'
+      path: '/mobile'
+      fullPath: '/mobile'
+      preLoaderRoute: typeof MobileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/a11y-fixes': {
       id: '/a11y-fixes'
       path: '/a11y-fixes'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   A11yRoute: A11yRoute,
   A11yFixesRoute: A11yFixesRoute,
+  MobileRoute: MobileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
