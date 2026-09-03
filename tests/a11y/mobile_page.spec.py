@@ -99,6 +99,7 @@ async def run_case(browser, label: str, viewport: dict) -> None:
                 const r = el.getBoundingClientRect();
                 if (r.width < 1 || r.height < 1) return false;
                 if (el.closest('p, li h3')) return false;
+                if (el.classList.contains('sr-only')) return false; // skip link: sized on focus
                 return r.width < 44 || r.height < 44;
               })
               .map(el => `${el.tagName.toLowerCase()} "${(el.textContent||'').trim().slice(0,24)}"`),
