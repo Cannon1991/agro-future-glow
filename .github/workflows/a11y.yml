@@ -76,6 +76,10 @@ jobs:
       - name: Run reflow / 200% text zoom tests
         run: python3 tests/a11y/reflow_zoom.spec.py
 
+      - name: Run mobile-first page (/mobile) a11y tests
+        run: python3 tests/a11y/mobile_page.spec.py
+
+
 
 
       - name: Generate a11y dashboard report
