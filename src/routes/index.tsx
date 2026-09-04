@@ -86,7 +86,7 @@ function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="inline-flex min-h-6 items-center rounded-md px-1.5 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               {l.label}
             </a>
