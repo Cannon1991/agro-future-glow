@@ -34,6 +34,8 @@ SUITES = [
     ("reduced_motion", "prefers-reduced-motion", "reduced_motion.spec.py"),
     ("live_regions", "ARIA live announcements", "live_regions.spec.py"),
     ("reflow_zoom", "Reflow at 200% text zoom", "reflow_zoom.spec.py"),
+    ("mobile_page", "Mobile-first page (/mobile)", "mobile_page.spec.py"),
+    ("tablet_desktop", "Tablet & desktop widths (768/1024, landscape)", "tablet_desktop.spec.py"),
 ]
 
 HEADER_RE = re.compile(
