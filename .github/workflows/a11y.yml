@@ -79,6 +79,9 @@ jobs:
       - name: Run mobile-first page (/mobile) a11y tests
         run: python3 tests/a11y/mobile_page.spec.py
 
+      - name: Run tablet/desktop (768px, 1024px, landscape) a11y tests
+        run: python3 tests/a11y/tablet_desktop.spec.py
+
 
 
 
