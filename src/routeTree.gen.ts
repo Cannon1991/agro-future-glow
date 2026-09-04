@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MobileRouteImport } from './routes/mobile'
 import { Route as A11yFixesRouteImport } from './routes/a11y-fixes'
+import { Route as A11yChecklistRouteImport } from './routes/a11y-checklist'
 import { Route as A11yRouteImport } from './routes/a11y'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const MobileRoute = MobileRouteImport.update({
 const A11yFixesRoute = A11yFixesRouteImport.update({
   id: '/a11y-fixes',
   path: '/a11y-fixes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const A11yChecklistRoute = A11yChecklistRouteImport.update({
+  id: '/a11y-checklist',
+  path: '/a11y-checklist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const A11yRoute = A11yRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
+  '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
   '/mobile': typeof MobileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
+  '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
   '/mobile': typeof MobileRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
+  '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
   '/mobile': typeof MobileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a11y' | '/a11y-fixes' | '/mobile'
+  fullPaths: '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a11y' | '/a11y-fixes' | '/mobile'
-  id: '__root__' | '/' | '/a11y' | '/a11y-fixes' | '/mobile'
+  to: '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile'
+  id: '__root__' | '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   A11yRoute: typeof A11yRoute
+  A11yChecklistRoute: typeof A11yChecklistRoute
   A11yFixesRoute: typeof A11yFixesRoute
   MobileRoute: typeof MobileRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/a11y-fixes'
       fullPath: '/a11y-fixes'
       preLoaderRoute: typeof A11yFixesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/a11y-checklist': {
+      id: '/a11y-checklist'
+      path: '/a11y-checklist'
+      fullPath: '/a11y-checklist'
+      preLoaderRoute: typeof A11yChecklistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/a11y': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   A11yRoute: A11yRoute,
+  A11yChecklistRoute: A11yChecklistRoute,
   A11yFixesRoute: A11yFixesRoute,
   MobileRoute: MobileRoute,
 }

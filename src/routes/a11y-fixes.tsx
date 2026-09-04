@@ -132,6 +132,10 @@ function A11yFixes() {
         <Link to="/a11y" className="text-muted-foreground underline-offset-4 hover:underline">
           Full dashboard
         </Link>
+        <Link to="/a11y-checklist" className="text-muted-foreground underline-offset-4 hover:underline">
+          Checklist
+        </Link>
+
       </nav>
 
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">

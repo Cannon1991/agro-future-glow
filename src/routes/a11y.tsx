@@ -112,6 +112,10 @@ function A11yDashboard() {
         <Link to="/a11y-fixes" className="text-muted-foreground underline-offset-4 hover:underline">
           Fix list
         </Link>
+        <Link to="/a11y-checklist" className="text-muted-foreground underline-offset-4 hover:underline">
+          Checklist
+        </Link>
+
       </nav>
 
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
