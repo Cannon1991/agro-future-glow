@@ -203,11 +203,15 @@ function MobilePage() {
           <h2 id="impact-title" className="text-2xl font-bold tracking-tight text-foreground">
             Built for food security
           </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            The same maps that help a single farmer plan a season help a local
+            government plan a harvest. AgroPulse Fix is built to be shared.
+          </p>
           <ul className="mt-6 space-y-3">
             {[
-              "Advisory in local languages by SMS and mobile.",
-              "Parcel registries and subsidy targeting for LGAs.",
-              "Food-security dashboards for state and federal teams.",
+              "Advice sent as short mobile messages, so it works on a basic phone with no data plan.",
+              "Plot registries local governments can use to reach the right farmers with seed and fertilizer support.",
+              "Season-by-season harvest outlooks for state agriculture teams planning storage and supply.",
             ].map((t) => (
               <li key={t} className="flex min-w-0 gap-3">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
@@ -222,8 +226,11 @@ function MobilePage() {
             Contact us
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            We reply within 24 hours.
+            Call or send a message about your farm, your local government or a
+            programme you run. Messages go straight to our team in Ado, Ekiti
+            State, and we answer in the order they arrive.
           </p>
+
           <ul className="mt-6 space-y-3">
             {contacts.map((c) => {
               const inner = (
