@@ -39,37 +39,40 @@ export const Route = createFileRoute("/mobile")({
 const features = [
   {
     icon: Satellite,
-    title: "Map every parcel",
-    desc: "Satellites find each farm plot in your village — no survey needed.",
+    title: "See every plot on a map",
+    desc: "We draw the boundaries of the farms around you from satellite images, so you can point at a plot instead of describing it.",
   },
   {
     icon: CloudRain,
-    title: "Know the weather",
-    desc: "Local rainfall models tell you when to plant and when to wait.",
+    title: "Rain and planting windows",
+    desc: "Local rainfall and temperature forecasts for your ward, turned into a simple answer: plant now, or wait.",
   },
   {
     icon: Bug,
-    title: "Catch disease early",
-    desc: "Growth anomalies are flagged days before you can see them.",
+    title: "Early warning on sick crops",
+    desc: "When a patch of your field starts growing differently from the rest, we flag it while the leaves still look fine.",
   },
   {
     icon: TrendingUp,
-    title: "Grow more",
-    desc: "Fertilizer guidance tuned to your soil has doubled pilot yields.",
+    title: "Fertilizer you don't waste",
+    desc: "Guidance on how much to apply, and where, based on how each part of your field is actually performing.",
   },
 ];
 
 const steps = [
-  "Tell us your village, LGA or state.",
-  "We map your parcels from satellite imagery.",
-  "You get daily crop, weather and disease guidance.",
+  "Tell us your village, local government or state — nothing else to fill in.",
+  "We pull recent satellite images for that area and outline the farm plots.",
+  "You receive planting, weather and crop-health guidance on your phone.",
 ];
+
+const crops = ["Maize", "Rice", "Cassava", "Yam", "Sorghum", "Cowpea", "Cocoa", "Oil palm"];
 
 const contacts: Array<{ icon: typeof MapPin; label: string; value: string; href?: string }> = [
   { icon: MapPin, label: "Office", value: "Ado, Ekiti State, Nigeria" },
   { icon: Phone, label: "Phone", value: "+234 806 335 3863", href: "tel:+2348063353863" },
   { icon: Mail, label: "Email", value: "godstimeenang4@gmail.com", href: "mailto:godstimeenang4@gmail.com" },
 ];
+
 
 function MobilePage() {
   return (
@@ -112,9 +115,11 @@ function MobilePage() {
             Precision farming, simplified for your phone.
           </h1>
           <p className="mt-4 text-base text-muted-foreground">
-            Satellite data, weather models and AI guidance for farmers in
-            villages, local governments and states across Nigeria.
+            Type your village, local government or state and AgroPulse Fix maps
+            the farm plots around you from satellite imagery, then sends
+            planting, rainfall and crop-health guidance in plain language.
           </p>
+
           <div className="mt-6 flex flex-col gap-3">
             <a
               href="#how"
@@ -136,20 +141,25 @@ function MobilePage() {
             height={1080}
             className="mt-8 aspect-[4/3] w-full rounded-2xl object-cover"
           />
-          <dl className="mt-6 grid grid-cols-2 gap-4">
-            {[
-              { v: "2×", l: "Yield uplift" },
-              { v: "30%", l: "Less waste" },
-              { v: "72h", l: "Early alerts" },
-              { v: "50+", l: "Crop varieties" },
-            ].map((s) => (
-              <div key={s.l} className="min-w-0 rounded-2xl border border-border bg-card p-4">
-                <dt className="text-2xl font-bold text-foreground">{s.v}</dt>
-                <dd className="mt-1 text-sm text-muted-foreground">{s.l}</dd>
-              </div>
+          <h2 className="mt-8 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+            Crops we cover today
+          </h2>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {crops.map((c) => (
+              <li
+                key={c}
+                className="rounded-full border border-border bg-card px-3 py-1.5 text-sm text-foreground"
+              >
+                {c}
+              </li>
             ))}
-          </dl>
+          </ul>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Coverage runs across all 36 states and the FCT, with guidance
+            written for smallholder farms of one hectare and up.
+          </p>
         </section>
+
 
         <section aria-labelledby="features-title" className="pt-14">
           <h2 id="features-title" className="text-2xl font-bold tracking-tight text-foreground">
@@ -193,11 +203,15 @@ function MobilePage() {
           <h2 id="impact-title" className="text-2xl font-bold tracking-tight text-foreground">
             Built for food security
           </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            The same maps that help a single farmer plan a season help a local
+            government plan a harvest. AgroPulse Fix is built to be shared.
+          </p>
           <ul className="mt-6 space-y-3">
             {[
-              "Advisory in local languages by SMS and mobile.",
-              "Parcel registries and subsidy targeting for LGAs.",
-              "Food-security dashboards for state and federal teams.",
+              "Advice sent as short mobile messages, so it works on a basic phone with no data plan.",
+              "Plot registries local governments can use to reach the right farmers with seed and fertilizer support.",
+              "Season-by-season harvest outlooks for state agriculture teams planning storage and supply.",
             ].map((t) => (
               <li key={t} className="flex min-w-0 gap-3">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
@@ -212,8 +226,11 @@ function MobilePage() {
             Contact us
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            We reply within 24 hours.
+            Call or send a message about your farm, your local government or a
+            programme you run. Messages go straight to our team in Ado, Ekiti
+            State, and we answer in the order they arrive.
           </p>
+
           <ul className="mt-6 space-y-3">
             {contacts.map((c) => {
               const inner = (
