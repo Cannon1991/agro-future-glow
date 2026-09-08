@@ -115,9 +115,11 @@ function MobilePage() {
             Precision farming, simplified for your phone.
           </h1>
           <p className="mt-4 text-base text-muted-foreground">
-            Satellite data, weather models and AI guidance for farmers in
-            villages, local governments and states across Nigeria.
+            Type your village, local government or state and AgroPulse Fix maps
+            the farm plots around you from satellite imagery, then sends
+            planting, rainfall and crop-health guidance in plain language.
           </p>
+
           <div className="mt-6 flex flex-col gap-3">
             <a
               href="#how"
