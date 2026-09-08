@@ -141,20 +141,25 @@ function MobilePage() {
             height={1080}
             className="mt-8 aspect-[4/3] w-full rounded-2xl object-cover"
           />
-          <dl className="mt-6 grid grid-cols-2 gap-4">
-            {[
-              { v: "2×", l: "Yield uplift" },
-              { v: "30%", l: "Less waste" },
-              { v: "72h", l: "Early alerts" },
-              { v: "50+", l: "Crop varieties" },
-            ].map((s) => (
-              <div key={s.l} className="min-w-0 rounded-2xl border border-border bg-card p-4">
-                <dt className="text-2xl font-bold text-foreground">{s.v}</dt>
-                <dd className="mt-1 text-sm text-muted-foreground">{s.l}</dd>
-              </div>
+          <h2 className="mt-8 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+            Crops we cover today
+          </h2>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {crops.map((c) => (
+              <li
+                key={c}
+                className="rounded-full border border-border bg-card px-3 py-1.5 text-sm text-foreground"
+              >
+                {c}
+              </li>
             ))}
-          </dl>
+          </ul>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Coverage runs across all 36 states and the FCT, with guidance
+            written for smallholder farms of one hectare and up.
+          </p>
         </section>
+
 
         <section aria-labelledby="features-title" className="pt-14">
           <h2 id="features-title" className="text-2xl font-bold tracking-tight text-foreground">
