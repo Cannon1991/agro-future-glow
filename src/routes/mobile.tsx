@@ -39,37 +39,40 @@ export const Route = createFileRoute("/mobile")({
 const features = [
   {
     icon: Satellite,
-    title: "Map every parcel",
-    desc: "Satellites find each farm plot in your village — no survey needed.",
+    title: "See every plot on a map",
+    desc: "We draw the boundaries of the farms around you from satellite images, so you can point at a plot instead of describing it.",
   },
   {
     icon: CloudRain,
-    title: "Know the weather",
-    desc: "Local rainfall models tell you when to plant and when to wait.",
+    title: "Rain and planting windows",
+    desc: "Local rainfall and temperature forecasts for your ward, turned into a simple answer: plant now, or wait.",
   },
   {
     icon: Bug,
-    title: "Catch disease early",
-    desc: "Growth anomalies are flagged days before you can see them.",
+    title: "Early warning on sick crops",
+    desc: "When a patch of your field starts growing differently from the rest, we flag it while the leaves still look fine.",
   },
   {
     icon: TrendingUp,
-    title: "Grow more",
-    desc: "Fertilizer guidance tuned to your soil has doubled pilot yields.",
+    title: "Fertilizer you don't waste",
+    desc: "Guidance on how much to apply, and where, based on how each part of your field is actually performing.",
   },
 ];
 
 const steps = [
-  "Tell us your village, LGA or state.",
-  "We map your parcels from satellite imagery.",
-  "You get daily crop, weather and disease guidance.",
+  "Tell us your village, local government or state — nothing else to fill in.",
+  "We pull recent satellite images for that area and outline the farm plots.",
+  "You receive planting, weather and crop-health guidance on your phone.",
 ];
+
+const crops = ["Maize", "Rice", "Cassava", "Yam", "Sorghum", "Cowpea", "Cocoa", "Oil palm"];
 
 const contacts: Array<{ icon: typeof MapPin; label: string; value: string; href?: string }> = [
   { icon: MapPin, label: "Office", value: "Ado, Ekiti State, Nigeria" },
   { icon: Phone, label: "Phone", value: "+234 806 335 3863", href: "tel:+2348063353863" },
   { icon: Mail, label: "Email", value: "godstimeenang4@gmail.com", href: "mailto:godstimeenang4@gmail.com" },
 ];
+
 
 function MobilePage() {
   return (
