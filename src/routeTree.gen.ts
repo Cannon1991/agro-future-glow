@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OfflineRouteImport } from './routes/offline'
 import { Route as MobileRouteImport } from './routes/mobile'
 import { Route as A11yFixesRouteImport } from './routes/a11y-fixes'
 import { Route as A11yChecklistRouteImport } from './routes/a11y-checklist'
 import { Route as A11yRouteImport } from './routes/a11y'
 import { Route as IndexRouteImport } from './routes/index'
 
+const OfflineRoute = OfflineRouteImport.update({
+  id: '/offline',
+  path: '/offline',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MobileRoute = MobileRouteImport.update({
   id: '/mobile',
   path: '/mobile',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
   '/mobile': typeof MobileRoute
+  '/offline': typeof OfflineRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
   '/mobile': typeof MobileRoute
+  '/offline': typeof OfflineRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,27 @@ export interface FileRoutesById {
   '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
   '/mobile': typeof MobileRoute
+  '/offline': typeof OfflineRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile'
+  fullPaths:
+    | '/'
+    | '/a11y'
+    | '/a11y-checklist'
+    | '/a11y-fixes'
+    | '/mobile'
+    | '/offline'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile'
-  id: '__root__' | '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile'
+  to: '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile' | '/offline'
+  id:
+    | '__root__'
+    | '/'
+    | '/a11y'
+    | '/a11y-checklist'
+    | '/a11y-fixes'
+    | '/mobile'
+    | '/offline'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,10 +99,18 @@ export interface RootRouteChildren {
   A11yChecklistRoute: typeof A11yChecklistRoute
   A11yFixesRoute: typeof A11yFixesRoute
   MobileRoute: typeof MobileRoute
+  OfflineRoute: typeof OfflineRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/offline': {
+      id: '/offline'
+      path: '/offline'
+      fullPath: '/offline'
+      preLoaderRoute: typeof OfflineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mobile': {
       id: '/mobile'
       path: '/mobile'
@@ -125,6 +155,7 @@ const rootRouteChildren: RootRouteChildren = {
   A11yChecklistRoute: A11yChecklistRoute,
   A11yFixesRoute: A11yFixesRoute,
   MobileRoute: MobileRoute,
+  OfflineRoute: OfflineRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
