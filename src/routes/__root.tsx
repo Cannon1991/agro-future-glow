@@ -90,14 +90,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "AgroPulse Fix uses satellite data, weather models and AI to map parcels, detect crop disease early, optimize fertilizer use and boost yields for farmers and governments." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/q8PEQEi4rFZFeJ0fgy4m5NMofPE2/social-images/social-1783937587834-ChatGPT_Image_Jul_13,_2026,_11_12_04_AM.webp" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/q8PEQEi4rFZFeJ0fgy4m5NMofPE2/social-images/social-1783937587834-ChatGPT_Image_Jul_13,_2026,_11_12_04_AM.webp" },
+      { name: "theme-color", content: "#14532d" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "AgroPulse" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
     ],
+
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
     ],
+
   }),
   shellComponent: RootShell,
   component: RootComponent,

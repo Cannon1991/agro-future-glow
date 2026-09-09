@@ -12,6 +12,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
+import { InstallApp } from "@/components/InstallApp";
+
 
 export const Route = createFileRoute("/mobile")({
   head: () => ({
@@ -122,11 +124,18 @@ function MobilePage() {
 
           <div className="mt-6 flex flex-col gap-3">
             <a
-              href="#how"
+              href="#app"
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground"
             >
-              See how it works <ArrowRight className="h-5 w-5 shrink-0" />
+              Install the app <ArrowRight className="h-5 w-5 shrink-0" />
             </a>
+            <a
+              href="#how"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-base font-semibold text-foreground"
+            >
+              See how it works
+            </a>
+
             <a
               href="#contact"
               className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-base font-semibold text-foreground"
@@ -220,6 +229,10 @@ function MobilePage() {
             ))}
           </ul>
         </section>
+
+        <InstallApp />
+
+
 
         <section id="contact" aria-labelledby="contact-title" className="pt-14">
           <h2 id="contact-title" className="text-2xl font-bold tracking-tight text-foreground">
