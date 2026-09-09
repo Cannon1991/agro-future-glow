@@ -12,6 +12,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
+import { InstallApp } from "@/components/InstallApp";
+
 
 export const Route = createFileRoute("/mobile")({
   head: () => ({
@@ -220,6 +222,10 @@ function MobilePage() {
             ))}
           </ul>
         </section>
+
+        <InstallApp />
+
+
 
         <section id="contact" aria-labelledby="contact-title" className="pt-14">
           <h2 id="contact-title" className="text-2xl font-bold tracking-tight text-foreground">
