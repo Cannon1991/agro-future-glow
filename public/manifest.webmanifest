@@ -1,0 +1,21 @@
+{
+  "name": "AgroPulse Fix",
+  "short_name": "AgroPulse",
+  "description": "Satellite parcel maps, rainfall guidance and early crop-disease alerts for farmers, councils and state teams in Nigeria.",
+  "start_url": "/mobile",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1a12",
+  "theme_color": "#14532d",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Contact the team", "url": "/mobile#contact" },
+    { "name": "How it works", "url": "/mobile#how" }
+  ]
+}
