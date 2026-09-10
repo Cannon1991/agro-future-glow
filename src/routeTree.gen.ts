@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OfflineRouteImport } from './routes/offline'
 import { Route as MobileRouteImport } from './routes/mobile'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as A11yFixesRouteImport } from './routes/a11y-fixes'
 import { Route as A11yChecklistRouteImport } from './routes/a11y-checklist'
 import { Route as A11yRouteImport } from './routes/a11y'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const OfflineRoute = OfflineRouteImport.update({
   id: '/offline',
@@ -24,6 +27,11 @@ const OfflineRoute = OfflineRouteImport.update({
 const MobileRoute = MobileRouteImport.update({
   id: '/mobile',
   path: '/mobile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const A11yFixesRoute = A11yFixesRouteImport.update({
@@ -41,10 +49,19 @@ const A11yRoute = A11yRouteImport.update({
   path: '/a11y',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -52,25 +69,32 @@ export interface FileRoutesByFullPath {
   '/a11y': typeof A11yRoute
   '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
+  '/auth': typeof AuthRoute
   '/mobile': typeof MobileRoute
   '/offline': typeof OfflineRoute
+  '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a11y': typeof A11yRoute
   '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
+  '/auth': typeof AuthRoute
   '/mobile': typeof MobileRoute
   '/offline': typeof OfflineRoute
+  '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/a11y': typeof A11yRoute
   '/a11y-checklist': typeof A11yChecklistRoute
   '/a11y-fixes': typeof A11yFixesRoute
+  '/auth': typeof AuthRoute
   '/mobile': typeof MobileRoute
   '/offline': typeof OfflineRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,25 +103,40 @@ export interface FileRouteTypes {
     | '/a11y'
     | '/a11y-checklist'
     | '/a11y-fixes'
+    | '/auth'
     | '/mobile'
     | '/offline'
+    | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a11y' | '/a11y-checklist' | '/a11y-fixes' | '/mobile' | '/offline'
-  id:
-    | '__root__'
+  to:
     | '/'
     | '/a11y'
     | '/a11y-checklist'
     | '/a11y-fixes'
+    | '/auth'
     | '/mobile'
     | '/offline'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/a11y'
+    | '/a11y-checklist'
+    | '/a11y-fixes'
+    | '/auth'
+    | '/mobile'
+    | '/offline'
+    | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   A11yRoute: typeof A11yRoute
   A11yChecklistRoute: typeof A11yChecklistRoute
   A11yFixesRoute: typeof A11yFixesRoute
+  AuthRoute: typeof AuthRoute
   MobileRoute: typeof MobileRoute
   OfflineRoute: typeof OfflineRoute
 }
@@ -116,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/mobile'
       fullPath: '/mobile'
       preLoaderRoute: typeof MobileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/a11y-fixes': {
@@ -139,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof A11yRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -146,14 +199,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   A11yRoute: A11yRoute,
   A11yChecklistRoute: A11yChecklistRoute,
   A11yFixesRoute: A11yFixesRoute,
+  AuthRoute: AuthRoute,
   MobileRoute: MobileRoute,
   OfflineRoute: OfflineRoute,
 }
